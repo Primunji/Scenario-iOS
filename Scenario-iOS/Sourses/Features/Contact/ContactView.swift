@@ -23,7 +23,7 @@ struct ContactView: View {
                 next = true
             }
             .navigationDestination(isPresented: $next) {
-                EmptyView()
+                ContactMoreView()
             }
     }
 }

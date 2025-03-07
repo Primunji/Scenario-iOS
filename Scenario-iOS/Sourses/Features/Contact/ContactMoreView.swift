@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ContactMoreView: View {
     var body: some View {
-        GeometryReader { scale in
             ZStack {
                 Color.black.opacity(0.05)
                     .ignoresSafeArea()
                 VStack(spacing: 0) {
+                    Spacer()
                     Image(systemName: "person.crop.circle.fill")
                         .font(.system(size: 180))
                         .foregroundColor(Color(hex: "C6C9CB"))
@@ -21,21 +21,22 @@ struct ContactMoreView: View {
                         .font(.pretendard(.semibold, size: 36))
                     Text("당신의 가족이 납치 되었습니다.")
                         .font(.pretendard(.medium, size: 16))
+                        .padding(.vertical,6).padding(.bottom,6)
+                    
                     HStack {
-                        RoundedRectangle(cornerRadius: 5)
-                            .frame(width: 79, height: 37)
-                            .foregroundColor(Color(hex: "F2F6FF"))
-                            .background {
-                                RoundedRectangle(cornerRadius: 5)
-                            }
-                            .cornerRadius(5)
-                        RoundedRectangle(cornerRadius: 5)
-                            .frame(width: 79, height: 37)
+                        ContactButton(text: "전화하기") //MARK: 버튼으로 만들어서 콜킷기능 넣으면됨
+                        ContactButton(text: "문자하기")
                     }
+                    .padding(.bottom,30)
+                    
+                    ContactCard(title: "통화기록", height: 353, scaleHeight: 353)
+                        .frame(height: 353)
+                        
                 }
-                .frame(width: scale.size.width,height: scale.size.width)
+                .padding(.horizontal,20)
+
             }
-        }
+        
     }
 }
 

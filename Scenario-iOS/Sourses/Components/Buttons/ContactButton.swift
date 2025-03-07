@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct ContactButton: View {
+    let text: String
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        RoundedRectangle(cornerRadius: 5)
+            .frame(width: 79, height: 37)
+            .foregroundColor(Color(hex: "F2F6FF"))
+            .cornerRadius(5)
+            .overlay {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(lineWidth: 0.2)
+                        .foregroundStyle(Color(hex: "51A2FF"))
+                    Text(text)
+                        .font(.pretendard(.semibold, size: 14))
+                        .foregroundColor(Color(hex: "51A2FF"))
+                }
+            }
     }
+    
 }
-
 #Preview {
-    ContactButton()
+    ContactButton(text: "전화하기")
 }

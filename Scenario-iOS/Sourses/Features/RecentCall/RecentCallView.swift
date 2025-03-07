@@ -22,6 +22,9 @@ struct RecentCallView: View {
             showPicker: true) {
                 next = true
             }
+            .navigationDestination(isPresented: $next) {
+                EmptyView()
+            }
     }
 }
 #Preview {

@@ -2,11 +2,13 @@ import SwiftUI
 
 struct ContactCard: View {
     let title: String
+    let height: CGFloat
+    let scaleHeight : CGFloat
     var body: some View {
         GeometryReader { scale in
             VStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .frame(width: scale.size.width * 1,height: 499)
+                    .frame(width: scale.size.width * 1,height: height)//499
                     .foregroundColor(.white)
                     .overlay {
                         VStack {
@@ -23,7 +25,7 @@ struct ContactCard: View {
                         }
                     }
             }
-            .frame(width: scale.size.width,height: 526)
+            .frame(width: scale.size.width,height: scaleHeight)//526
         }
     }
 }

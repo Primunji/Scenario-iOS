@@ -40,7 +40,7 @@ struct SharedContentView: View {
                 if showPicker {
                     RecentCard()
                 } else {
-                    ContactCard(title: "연락처")
+                    ContactCard(title: "연락처",height: 499, scaleHeight: 526)
                 }
                 
                 AddButton(text: addButtonText, action: addAction) 
