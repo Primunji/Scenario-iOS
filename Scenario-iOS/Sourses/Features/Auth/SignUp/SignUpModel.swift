@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+struct SignUpModel: Codable {
+    var username: String
+    var password: String
+}
+
+struct SignUpResponse: Decodable {
+    var username: String
+    var password: String
+}

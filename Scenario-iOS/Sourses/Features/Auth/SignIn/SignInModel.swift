@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct SignInModel: Codable {
+    var username: String
+    var password: String
+}

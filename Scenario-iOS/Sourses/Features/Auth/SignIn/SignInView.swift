@@ -10,6 +10,8 @@ import SwiftUI
 struct SignInView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SignInViewModel()
+    @State private var isLoginSuccess = false
+    @State private var showAlert = false
     @State private var next = false
     
     var body: some View {
@@ -36,7 +38,17 @@ struct SignInView: View {
                 
                 Spacer()
                 
-                LoginButton(destination: MainTabView().navigationBarBackButtonHidden(), text: "로그인")
+                LoginButton(action: {
+                    next = true
+                    viewModel.login { success in
+                        if success {
+                            isLoginSuccess = true
+                        } else {
+                            print(viewModel.loginerrorMessage ?? "로그인 실패")
+                            showAlert = true
+                        }
+                    }
+                }, text: "로그인")
                
                 
             }
@@ -54,6 +66,13 @@ struct SignInView: View {
             .font(.pretendard(.regular, size: 16))
             .foregroundColor(Color(hex: "424242"))
 
+        }
+        .navigationDestination(isPresented: $next, destination: {
+            MainTabView()
+                .navigationBarBackButtonHidden()
+        })
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("로그인 실패"),dismissButton: .cancel(Text("ㅇㅋ")))
         }
     }
 }

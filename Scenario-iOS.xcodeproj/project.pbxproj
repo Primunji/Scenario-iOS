@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		19622CAA2D7C11F700ECB5D7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 19622CA92D7C11F700ECB5D7 /* Alamofire */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		19622B302D7B6D0100ECB5D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19622CAA2D7C11F700ECB5D7 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +107,7 @@
 			);
 			name = "Scenario-iOS";
 			packageProductDependencies = (
+				19622CA92D7C11F700ECB5D7 /* Alamofire */,
 			);
 			productName = "Scenario-iOS";
 			productReference = 19622B1F2D7B6D0000ECB5D7 /* Scenario-iOS.app */;
@@ -179,6 +185,9 @@
 			);
 			mainGroup = 19622B162D7B6D0000ECB5D7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				19622CA82D7C11F700ECB5D7 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 19622B202D7B6D0000ECB5D7 /* Products */;
 			projectDirPath = "";
@@ -544,6 +553,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		19622CA82D7C11F700ECB5D7 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		19622CA92D7C11F700ECB5D7 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 19622CA82D7C11F700ECB5D7 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 19622B172D7B6D0000ECB5D7 /* Project object */;
 }

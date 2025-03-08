@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+struct ScenarioModel: Codable {
+    var name: String
+    var content: String
+    var prompt: String
+}
+
+
+struct ScenarioResponse : Decodable {
+    var success: Bool
+    var reason : String
+}

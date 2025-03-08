@@ -7,12 +7,15 @@
 
 import SwiftUI
 
-struct LoginButton<Destination:View>: View {
-    let destination: Destination
+struct LoginButton: View {
+    let action: () -> Void
     let text: String
     var body: some View {
         GeometryReader { scale in
-            NavigationLink(destination: destination.navigationBarBackButtonHidden(), label: {
+            
+            Button {
+                action()
+            } label: {
                 VStack {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: scale.size.width * 1,height: 65)
@@ -24,7 +27,8 @@ struct LoginButton<Destination:View>: View {
                         }
                 }
                 .frame(width: scale.size.width, height: scale.size.height)
-            })
+
+            }
 
         }
         .frame(height: 65)
@@ -33,6 +37,8 @@ struct LoginButton<Destination:View>: View {
 }
 
 #Preview {
-    LoginButton(destination: EmptyView(), text: "dd")
+    LoginButton(action: {
+        print("d")
+    }, text: "dd")
 }
 

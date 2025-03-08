@@ -23,7 +23,9 @@ struct MainView: View {
             
             Spacer()
             
-            LoginButton(destination: SignInView(), text: "아이디로 로그인")
+            LoginButton(action: {
+                next = true //MARK: 이건그냥 네비게이트 되게하셈
+            }, text: "아이디로 로그인")
             
             HStack {
                 Text("아이디가 없나요?")
@@ -39,6 +41,10 @@ struct MainView: View {
             .foregroundColor(Color(hex: "424242"))
         }
         .padding(.horizontal,16)
+        .navigationDestination(isPresented: $next) {
+            SignInView()
+                .navigationBarBackButtonHidden()
+        }
     }
 }
 
