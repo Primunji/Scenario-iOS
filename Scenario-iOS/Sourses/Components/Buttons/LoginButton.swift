@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginButton: View {
+    @ObservedObject var viewModel: SignInViewModel
     let action: () -> Void
     let text: String
     var body: some View {
@@ -19,7 +20,7 @@ struct LoginButton: View {
                 VStack {
                     RoundedRectangle(cornerRadius: 10)
                         .frame(width: scale.size.width * 1,height: 65)
-                        .foregroundColor(Color(hex: "2B7FFF"))
+                        .foregroundColor(viewModel.isLoginDisabled ? Color(hex: "BEDBFF") : Color(hex: "2B7FFF"))
                         .overlay {
                             Text(text)
                                 .font(.pretendard(.semibold, size: 18))
@@ -29,16 +30,9 @@ struct LoginButton: View {
                 .frame(width: scale.size.width, height: scale.size.height)
 
             }
-
+            .disabled(viewModel.isLoginDisabled)
         }
         .frame(height: 65)
     }
     
 }
-
-#Preview {
-    LoginButton(action: {
-        print("d")
-    }, text: "dd")
-}
-

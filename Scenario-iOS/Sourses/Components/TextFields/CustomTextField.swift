@@ -26,6 +26,6 @@ struct CustomTextField: TextFieldStyle {
             }
             .frame(width: scale.size.width,height: scale.size.height)
         }
-        .frame(height: 80)
+        .frame(height: height)
     }
 }

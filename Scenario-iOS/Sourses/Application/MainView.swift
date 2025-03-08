@@ -23,7 +23,7 @@ struct MainView: View {
             
             Spacer()
             
-            LoginButton(action: {
+            LoginButton(viewModel: SignInViewModel(),action: {
                 next = true //MARK: 이건그냥 네비게이트 되게하셈
             }, text: "아이디로 로그인")
             

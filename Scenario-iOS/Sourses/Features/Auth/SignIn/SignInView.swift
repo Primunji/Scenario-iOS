@@ -38,7 +38,7 @@ struct SignInView: View {
                 
                 Spacer()
                 
-                LoginButton(action: {
+                LoginButton(viewModel: viewModel,action: {
                     next = true
                     viewModel.login { success in
                         if success {
@@ -49,6 +49,7 @@ struct SignInView: View {
                         }
                     }
                 }, text: "로그인")
+                
                
                 
             }
