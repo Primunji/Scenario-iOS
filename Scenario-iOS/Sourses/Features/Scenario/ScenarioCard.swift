@@ -21,13 +21,15 @@ struct ScenarioCard: View {
                         .overlay {
                             scenarioBackground(scale)
                             scenarioContent(scale)
+                                .foregroundStyle(.black)
+
                         }
                 }
                 .frame(width: scale.size.width, height: scale.size.height)
             }
             .alert(isPresented: $alertOn) {
                 Alert(title: Text("연락처에 추가하시겠습니까?"), primaryButton: .cancel(Text("아니요")), secondaryButton: .default(Text("네"), action: {
-                    viewModel.addContacts(scenarioId: <#T##Int64#>, completion: <#T##(Result<String, any Error>) -> Void#>)
+                    
                 }))
             }
             .onAppear {
@@ -101,7 +103,7 @@ struct ScenarioCard: View {
                         .font(.system(size: 60))
                 }
 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading,spacing: 0) {
                     Text(newScenario.name)
                         .font(.pretendard(.semibold, size: 18))
                     Text(newScenario.content)

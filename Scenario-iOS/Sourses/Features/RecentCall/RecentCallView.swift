@@ -31,7 +31,7 @@ struct RecentCallView: View {
                 
                 CustomSearchField(placeholder: "검색하기",searchText: $searchText)
                 
-                RecentCard()
+                RecentCard(viewModel: ScenarioViewModel(), height: 499)
                 
                 
                 AddButton(text: "addButtonText") {

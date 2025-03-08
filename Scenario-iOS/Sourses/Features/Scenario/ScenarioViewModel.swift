@@ -24,6 +24,35 @@ class ScenarioViewModel: ObservableObject {
         return UserDefaults.standard.string(forKey: "accessToken") ?? ""
     }
     
+    func fetchRecent() {
+        let url = serverUrl.getUrl(for: "/recent")
+        let header: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer \(accessToken)"
+        ]
+        AF.request(url, method: .get, encoding: JSONEncoding.default, headers: header)
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: ScenarioResponse.self) { response in
+                if let data = response.data, let rawResponse = String(data: data, encoding: .utf8) {
+                    print("서버 응답: \(rawResponse)")
+                }
+                switch response.result {
+                case .success(let scenarioResponse):
+                    print("시나리오 가져오기 성공")
+                    DispatchQueue.main.async {
+                        self.scenario = scenarioResponse.data
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self.errorMessage = "오류 발생: \(error.localizedDescription)"
+                        print(self.accessToken)
+                    }
+                    print("오류: \(error.localizedDescription)")
+                    
+                }
+            }
+    }
+    
     func fetchScenario() {
         let url = serverUrl.getUrl(for: "/scenario")
         let header: HTTPHeaders = [
