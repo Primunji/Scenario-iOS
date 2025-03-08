@@ -13,27 +13,41 @@ struct RecentCallView: View {
     @State private var seeMore = false
     
     var body: some View {
-        SharedContentView(
-            seeMore: $seeMore,
-            searchText: $searchText,
-            title: "내역",
-            addButtonText: "내역 더보기",
-            contactCardHeight: 455,
-            showPicker: true) {
-                next = true
+        ZStack {
+            Color.black.opacity(0.05)
+                .ignoresSafeArea()
+            VStack(spacing: 0) {
+                HStack {
+                    Image("Logo")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(.top, 39)
+                    Text("최근 통화")
+                        .font(.pretendard(.semibold, size: 36))
+                        .padding(.bottom, 10)
+                        .padding(.top, 50)
+                    Spacer()
+                }
+                
+                CustomSearchField(placeholder: "검색하기",searchText: $searchText)
+                
+                RecentCard()
+                
+                
+                AddButton(text: "addButtonText") {
+                    print("dd")
+                }
+                .offset(y: 10)
             }
-            .navigationDestination(isPresented: $next) {
-                EmptyView()
-            }
+            .padding(.horizontal, 16)
+            
+        }
+        
     }
 }
+    
+
 #Preview {
     RecentCallView()
 }
 
-
-enum RecentCallTabs: String, CaseIterable {
-    case all = "전체"
-    case success = "성공"
-    case fail = "실패"
-}

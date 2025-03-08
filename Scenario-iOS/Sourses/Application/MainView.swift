@@ -23,9 +23,11 @@ struct MainView: View {
             
             Spacer()
             
-            LoginButton(viewModel: SignInViewModel(),action: {
-                next = true //MARK: 이건그냥 네비게이트 되게하셈
-            }, text: "아이디로 로그인")
+            
+            
+            MainViewButton {
+                next = true
+            }
             
             HStack {
                 Text("아이디가 없나요?")

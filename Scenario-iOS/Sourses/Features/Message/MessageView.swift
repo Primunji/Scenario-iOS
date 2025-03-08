@@ -8,28 +8,48 @@
 import SwiftUI
 
 struct MessageView: View {
+    @State var next = false
     @State var searchText = ""
     @State var seeMore = false
-    @State var next = false
+    
     var body: some View {
-        SharedContentView(
-            seeMore: $seeMore,
-            searchText: $searchText,
-            title: "메시지",
-            addButtonText: "연락처 추가하기",
-            contactCardHeight: 499,
-            showPicker: true) {
-                next = true
+        ZStack {
+            Color.black.opacity(0.05)
+                .ignoresSafeArea()
+            VStack(spacing: 0) {
+                HStack {
+                    Image("Logo")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(.top, 39)
+                    Text("연락처")
+                        .font(.pretendard(.semibold, size: 36))
+                        .padding(.bottom, 10)
+                        .padding(.top, 50)
+                    Spacer()
+                }
+                
+                CustomSearchField(placeholder: "검색하기",searchText: $searchText)
+                
+                MessageCard(height: 499)
+                
+                
+                AddButton(text: "addButtonText") {
+                    print("dd")
+                }
+                .offset(y: 10)
             }
-            .navigationDestination(isPresented: $next) {
-                EmptyView()
-            }
+            .padding(.horizontal, 16)
+            
+        }
     }
 }
+
 
 #Preview {
     MessageView()
 }
+
 
 //
 //struct ContactView: View {

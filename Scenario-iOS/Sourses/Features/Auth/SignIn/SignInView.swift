@@ -39,10 +39,11 @@ struct SignInView: View {
                 Spacer()
                 
                 LoginButton(viewModel: viewModel,action: {
-                    next = true
                     viewModel.login { success in
                         if success {
                             isLoginSuccess = true
+                            next = true
+
                         } else {
                             print(viewModel.loginerrorMessage ?? "로그인 실패")
                             showAlert = true

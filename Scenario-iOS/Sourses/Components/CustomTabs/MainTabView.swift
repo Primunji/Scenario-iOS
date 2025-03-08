@@ -19,7 +19,7 @@ struct MainTabView: View {
                     .opacity(selectedTab == .recentCall ? 1 : 0)
                 MessageView()
                     .opacity(selectedTab == .message ? 1 : 0)
-                CreateView()
+                ScenarioView()
                     .opacity(selectedTab == .scenario ? 1 : 0)
             }
             HStack {

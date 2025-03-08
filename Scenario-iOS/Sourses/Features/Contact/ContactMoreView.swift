@@ -29,7 +29,7 @@ struct ContactMoreView: View {
                     }
                     .padding(.bottom,30)
                     
-                    ContactCard(title: "통화기록", height: 353, scaleHeight: 353)
+                    ContactCard(height: 353)
                         .frame(height: 353)
                         
                 }

@@ -1,6 +1,13 @@
+//
+//  MessageCard.swift
+//  Scenario-iOS
+//
+//  Created by dgsw07 on 3/9/25.
+//
+
 import SwiftUI
 
-struct ContactCard: View {
+struct MessageCard: View {
     let height: CGFloat
     var body: some View {
         GeometryReader { scale in
@@ -11,7 +18,7 @@ struct ContactCard: View {
                     .overlay {
                         VStack {
                             HStack {
-                                Text("연락처")
+                                Text("메시지")
                                     .font(.pretendard(.semibold, size: 16))
                                     .padding(20)
                                     .foregroundStyle(Color(hex: "2B7FFF"))

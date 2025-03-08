@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomSearchField: View {
-    @State private var placeholder: String = "검색하기"
+    @State  var placeholder: String
     @Binding var searchText: String
     
     var body: some View {
@@ -39,7 +39,3 @@ struct CustomSearchField: View {
     }
 }
 
-#Preview {
-    @State var searchText = ""
-    return CustomSearchField(searchText: $searchText)
-}

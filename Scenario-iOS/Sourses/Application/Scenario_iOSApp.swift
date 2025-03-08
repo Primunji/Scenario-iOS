@@ -9,10 +9,17 @@ import SwiftUI
 
 @main
 struct Scenario_iOSApp: App {
+    @AppStorage("accessToken")
+    private var accessToken: String?
+    @StateObject private var viewModel = SignInViewModel()
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                MainView()
+                if accessToken == nil {
+                    MainView()
+                } else {
+                    MainTabView()
+                }
             }
         }
     }

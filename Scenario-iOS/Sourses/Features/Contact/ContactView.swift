@@ -13,18 +13,35 @@ struct ContactView: View {
     @State var seeMore = false
     
     var body: some View {
-        SharedContentView(
-            seeMore: $seeMore,
-            searchText: $searchText,
-            title: "연락처",
-            addButtonText: "연락처 추가하기",
-            contactCardHeight: 499,
-            showPicker: false) {
-                next = true
+        ZStack {
+            Color.black.opacity(0.05)
+                .ignoresSafeArea()
+            VStack(spacing: 0) {
+                HStack {
+                    Image("Logo")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(.top, 39)
+                    Text("연락처")
+                        .font(.pretendard(.semibold, size: 36))
+                        .padding(.bottom, 10)
+                        .padding(.top, 50)
+                    Spacer()
+                }
+                
+                CustomSearchField(placeholder: "검색하기",searchText: $searchText)
+                
+                ContactCard(height: 499)
+                
+                
+                AddButton(text: "addButtonText") {
+                    print("dd")
+                }
+                .offset(y: 10)
             }
-            .navigationDestination(isPresented: $next) {
-                ContactMoreView()
-            }
+            .padding(.horizontal, 16)
+            
+        }
     }
 }
 
@@ -32,3 +49,5 @@ struct ContactView: View {
 #Preview {
     ContactView()
 }
+
+
