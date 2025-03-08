@@ -24,16 +24,16 @@ struct LogOutView: View {
                         alertOn = true
                     }
                     
-                    ForEach(viewModel.scenario, id: \.id) { newScenario in
-                        VStack {
-                            Text(newScenario.name)
-                            AsyncImage(url: URL(string: newScenario.profileURL)) { image in
-                                image.resizable()
-                            } placeholder: {
-                                Circle()
-                            }
-                        }
-                    }
+//                    ForEach(viewModel.scenario, id: \.id) { newScenario in
+//                        VStack {
+//                            Text(newScenario.name)
+//                            AsyncImage(url: URL(string: newScenario.profileURL)) { image in
+//                                image.resizable()
+//                            } placeholder: {
+//                                Circle()
+//                            }
+//                        }
+//                    }
                 }
                 .frame(width: scale.size.width, height: scale.size.height)
                 .onAppear {

@@ -1,31 +1,97 @@
 import SwiftUI
 
 struct ContactCard: View {
+    @State var next = false
+    @ObservedObject var viewModel: ContactViewModel
     let height: CGFloat
     var body: some View {
         GeometryReader { scale in
-            VStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .frame(width: scale.size.width * 1,height: height)//499
-                    .foregroundColor(.white)
-                    .overlay {
-                        VStack {
-                            HStack {
-                                Text("연락처")
-                                    .font(.pretendard(.semibold, size: 16))
-                                    .padding(20)
-                                    .foregroundStyle(Color(hex: "2B7FFF"))
-                                Spacer()
-                            }
-                                ContactUserList(users: ["이상은", "김강연", "이기찬", "박민주"], limit: 4).padding(.bottom,7)
-                            
-                            Spacer()
+            ZStack {
+                VStack {
+                    scenarioBackground(scale)
+                        .overlay {
+                            scenarioBackground(scale)
+                            scenarioContent(scale)
                         }
-                    }
+                }
+                .frame(width: scale.size.width, height: scale.size.height)
             }
-            .frame(width: scale.size.width,height: 526)//526
+            .onAppear {
+                viewModel.fetchContacts()
+            }
+            .frame(width: scale.size.width, height: 526)
+            .navigationDestination(isPresented: $next) {
+                ContactMoreView()
+            }
         }
+    }
+    
+    private func scenarioBackground(_ scale: GeometryProxy) -> some View {
+        RoundedRectangle(cornerRadius: 10)
+            .frame(width: scale.size.width, height: height)
+            .foregroundColor(.white)
+    }
+    
+    private func scenarioContent(_ scale: GeometryProxy) -> some View {
+        VStack {
+            scenarioHeader()
+            scenarioList(scale)
+        }
+    }
+    
+    private func scenarioHeader() -> some View {
+        HStack {
+            Text("연락처")
+                .font(.pretendard(.semibold, size: 16))
+                .padding(20)
+                .foregroundStyle(Color(hex: "2B7FFF"))
+            Spacer()
+        }
+    }
+    
+    private func scenarioList(_ scale: GeometryProxy) -> some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(viewModel.contact, id: \.id) { newContact in
+                    contactRow(newContact, scale)
+                }
+            }
+        }
+    }
+    
+    private func contactRow(_ newContact: ContactModel, _ scale: GeometryProxy) -> some View {
+        
+        HStack(spacing: 10) {
+            AsyncImage(url: URL(string: newContact.profile_url)) { image in
+                image.resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .frame(width: 80, height: 80)
+            } placeholder: {
+                Image(systemName: "person.crop.circle.fill")
+                    .foregroundColor(Color(hex: "C6C9CB"))
+                    .font(.system(size: 60))
+            }
+            
+            VStack(alignment: .leading) {
+                Text(newContact.name)
+                    .font(.pretendard(.semibold, size: 18))
+                Text(newContact.content)
+                    .lineLimit(1)
+                    .font(.pretendard(.medium, size: 16))
+            }
+            Spacer()
+        }
+        .frame(width: scale.size.width, height: 80)
+        .padding(.leading, 27)
+        
+        
+        
     }
 }
 
 
+
+#Preview {
+    ContactCard(viewModel: ContactViewModel(), height: 499)
+}

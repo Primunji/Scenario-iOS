@@ -7,28 +7,20 @@
 
 import Foundation
 
-struct ScenarioModel: Codable, Identifiable, Hashable {
-    var id: Int
-    var name: String
-    var content: String
-    var profileURL: String
-    var actorID: String
-    var prompt: String
-    var assistantID: String
-    var createdAt: String
-    
-    enum CodingKeys: String, CodingKey {
-        case id, name, content, prompt
-        case profileURL = "profile_url"
-        case actorID = "actor_id"
-        case assistantID = "assistant_id"
-        case createdAt = "created_at"
-    }
+struct ScenarioModel: Decodable, Identifiable {
+    let id: Int
+    let name: String
+    let content: String
+    let profile_url: String
+    let actor_id: String
+    let prompt: String
+    let assistant_id: String
+    let created_at: String
 }
 
 struct ScenarioResponse: Decodable {
-    var status: Int
-    var state: String
-    var message: String
-    var data: [ScenarioModel]
+    let status: Int
+    let state: String
+    let message: String
+    let data: [ScenarioModel]
 }

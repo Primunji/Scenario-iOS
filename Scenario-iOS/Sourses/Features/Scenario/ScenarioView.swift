@@ -11,7 +11,7 @@ struct ScenarioView: View {
     @State var next = false
     @State var searchText = ""
     @State var seeMore = false
-    
+    @StateObject var viewModel = ScenarioViewModel()
     var body: some View {
         ZStack {
             Color.black.opacity(0.05)
@@ -31,17 +31,18 @@ struct ScenarioView: View {
                 
                 CustomSearchField(placeholder: "검색하기",searchText: $searchText)
                 
-                ScenarioCard(height: 499)
+                ScenarioCard(viewModel: viewModel, height: 499)
                 
                 
                 AddButton(text: "addButtonText") {
-                    print("dd")
+                    
                 }
                 .offset(y: 10)
             }
             .padding(.horizontal, 16)
             
         }
+       
     }
 }
 

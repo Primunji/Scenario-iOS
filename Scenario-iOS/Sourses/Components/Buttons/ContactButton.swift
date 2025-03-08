@@ -8,25 +8,27 @@
 import SwiftUI
 
 struct ContactButton: View {
+    let action: () -> Void
     let text: String
     var body: some View {
-        RoundedRectangle(cornerRadius: 5)
-            .frame(width: 79, height: 37)
-            .foregroundColor(Color(hex: "F2F6FF"))
-            .cornerRadius(5)
-            .overlay {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(lineWidth: 0.2)
-                        .foregroundStyle(Color(hex: "51A2FF"))
-                    Text(text)
-                        .font(.pretendard(.semibold, size: 14))
-                        .foregroundColor(Color(hex: "51A2FF"))
+        Button {
+            action()
+        } label: {
+            RoundedRectangle(cornerRadius: 5)
+                .frame(width: 79, height: 37)
+                .foregroundColor(Color(hex: "F2F6FF"))
+                .cornerRadius(5)
+                .overlay {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(lineWidth: 0.2)
+                            .foregroundStyle(Color(hex: "51A2FF"))
+                        Text(text)
+                            .font(.pretendard(.semibold, size: 14))
+                            .foregroundColor(Color(hex: "51A2FF"))
+                    }
                 }
-            }
+        }
     }
     
-}
-#Preview {
-    ContactButton(text: "전화하기")
 }

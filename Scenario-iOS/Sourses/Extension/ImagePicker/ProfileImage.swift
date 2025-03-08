@@ -11,11 +11,21 @@ struct ProfileImage: View {
     @State var showImagePicker = false
     @State var selectedUIImage: UIImage?
     @State var image: Image?
-    
+    @ObservedObject var viewModel: ScenarioViewModel 
+
     func loadImage() {
         guard let selectedImage = selectedUIImage else { return }
         image = Image(uiImage: selectedImage)
+
+        viewModel.uploadImage(selectedImage) { success in
+            if success {
+                print("이미지 URL 저장 완료: \(viewModel.imageUrl)")
+            } else {
+                print(" 이미지 업로드 실패")
+            }
+        }
     }
+
     var body: some View {
         VStack {
             if let image = image {
@@ -28,7 +38,7 @@ struct ProfileImage: View {
                     showImagePicker.toggle()
                 } label: {
                     Circle()
-                        .frame(width: 128,height: 128)
+                        .frame(width: 128, height: 128)
                         .foregroundColor(Color(hex: "F3F4F5"))
                         .overlay {
                             Circle()
@@ -44,13 +54,10 @@ struct ProfileImage: View {
             }
         }
         .sheet(isPresented: $showImagePicker, onDismiss: {
-                       loadImage()
-                   }) {
-                       ImagePicker(image: $selectedUIImage)
-               }
+            loadImage()
+        }) {
+            ImagePicker(image: $selectedUIImage)
+        }
     }
 }
 
-#Preview {
-    ProfileImage()
-}

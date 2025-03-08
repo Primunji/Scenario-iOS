@@ -31,16 +31,20 @@ struct ContactView: View {
                 
                 CustomSearchField(placeholder: "검색하기",searchText: $searchText)
                 
-                ContactCard(height: 499)
+                ContactCard(viewModel: ContactViewModel(),height: 499)
                 
                 
-                AddButton(text: "addButtonText") {
-                    print("dd")
+                AddButton(text: "연락처 추가") {
+                    //연락처추가
                 }
                 .offset(y: 10)
             }
             .padding(.horizontal, 16)
             
+        }
+        .navigationDestination(isPresented: $next) {
+            ContactMoreView()
+                .navigationBarBackButtonHidden()
         }
     }
 }

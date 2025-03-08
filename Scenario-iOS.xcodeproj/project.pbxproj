@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		19622CAA2D7C11F700ECB5D7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 19622CA92D7C11F700ECB5D7 /* Alamofire */; };
+		19622E082D7CB48D00ECB5D7 /* SwiftAudioEx in Frameworks */ = {isa = PBXBuildFile; productRef = 19622E072D7CB48D00ECB5D7 /* SwiftAudioEx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19622E082D7CB48D00ECB5D7 /* SwiftAudioEx in Frameworks */,
 				19622CAA2D7C11F700ECB5D7 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,6 +110,7 @@
 			name = "Scenario-iOS";
 			packageProductDependencies = (
 				19622CA92D7C11F700ECB5D7 /* Alamofire */,
+				19622E072D7CB48D00ECB5D7 /* SwiftAudioEx */,
 			);
 			productName = "Scenario-iOS";
 			productReference = 19622B1F2D7B6D0000ECB5D7 /* Scenario-iOS.app */;
@@ -187,6 +190,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				19622CA82D7C11F700ECB5D7 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				19622E062D7CB48D00ECB5D7 /* XCRemoteSwiftPackageReference "SwiftAudio" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 19622B202D7B6D0000ECB5D7 /* Products */;
@@ -393,6 +397,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Scenario-iOS-Info.plist";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "통화 중 블루투스 기기를 사용할 수 있도록 허용합니다";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "블루투스 장치를 통해 오디오 데이터를 처리할 수 있도록 허용합니다";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "앱에서 마이크를 사용하여 통화 기능을 제공합니다";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "앱에서 음성 인식을 사용하여 통화 관련 기능을 제공합니다";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -423,6 +431,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Scenario-iOS-Info.plist";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "통화 중 블루투스 기기를 사용할 수 있도록 허용합니다";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "블루투스 장치를 통해 오디오 데이터를 처리할 수 있도록 허용합니다";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "앱에서 마이크를 사용하여 통화 기능을 제공합니다";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "앱에서 음성 인식을 사용하여 통화 관련 기능을 제공합니다";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -563,6 +575,14 @@
 				minimumVersion = 5.10.2;
 			};
 		};
+		19622E062D7CB48D00ECB5D7 /* XCRemoteSwiftPackageReference "SwiftAudio" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/doublesymmetry/SwiftAudio.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -570,6 +590,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 19622CA82D7C11F700ECB5D7 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		19622E072D7CB48D00ECB5D7 /* SwiftAudioEx */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 19622E062D7CB48D00ECB5D7 /* XCRemoteSwiftPackageReference "SwiftAudio" */;
+			productName = SwiftAudioEx;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

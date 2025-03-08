@@ -15,11 +15,13 @@ struct Scenario_iOSApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                if accessToken == nil {
-                    MainView()
-                } else {
-                    MainTabView()
-                }
+//                if accessToken == nil {
+//                    MainView()
+//                } else {
+//                    MainTabView()
+//                }
+                MainView()
+//                TestPilotView()
             }
         }
     }

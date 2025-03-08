@@ -26,7 +26,7 @@ struct RecentCard: View {
                                                 .foregroundStyle(Color(hex: "2B7FFF"))
                                             Spacer()
                                         }
-                                            ContactUserList(users: ["이상은", "김강연", "이기찬", "박민주"], limit: 1).padding(.bottom,7)
+                                          
                                             
                                         Spacer()
                                     }
