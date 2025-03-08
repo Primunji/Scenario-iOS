@@ -11,6 +11,7 @@ import Foundation
 class SignUpViewModel: ObservableObject {
     @Published var username = ""
     @Published var password  = ""
+    @Published var passwordCheck  = ""
     let serverUrl = ServerUrl.shared
     @Published var isSecure: Bool = true
     @Published var signupErrorMessage: String? = nil
@@ -20,7 +21,11 @@ class SignUpViewModel: ObservableObject {
     var url: String {
         serverUrl.getUrl(for: "/auth/sign-up")
     }
-
+    
+    var isSignUpDisabled: Bool {
+        !username.isEmpty && !password.isEmpty && !passwordCheck.isEmpty && password == passwordCheck
+       
+    }
     var params: SignUpModel {
         SignUpModel(username: username, password: password)
     }
@@ -41,9 +46,6 @@ class SignUpViewModel: ObservableObject {
         }
     }
 
-    var isSignupDisabled: Bool {
-        username.isEmpty || password.isEmpty
-    }
 
     func signUp() async -> Bool {
         return await withCheckedContinuation { continuation in

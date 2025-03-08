@@ -8,39 +8,100 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @State var showMain = false
+    @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = SignUpViewModel()
-    @State var passwordCheck = ""
+    @State private var isLoginSuccess = false
+    @State private var showAlert = false
+    @State private var next = false
+    
     var body: some View {
-        VStack {
-            Group {
-                TextField("이름",text: $viewModel.username).textInputAutocapitalization(.never)
-                TextField("비밀번호",text: $viewModel.password).textInputAutocapitalization(.never)
-                TextField("비밀번호 확인",text: $passwordCheck).textInputAutocapitalization(.never)
-            }
-            .padding()
-            
-            Button {
-                Task {
-                    let signupResult = await viewModel.signUp()
-                    if signupResult {
-                        showMain = true
-                    } else {
-                        print("회원가입 실패")
-                    }
+        VStack(spacing:0) {
+            VStack(alignment:.leading, spacing: 10) {
+                HStack {
+                    AuthBackButton()
+                        .padding(.bottom, 21)
+                    Spacer()
                 }
-            } label: {
-                Text("Button")
+                
+                Text("시나리오에 회원가입")
+                    .font(.pretendard(.extrabold, size: 36))
+                Text("아이디로 시나리오에 회원가입 하세요!")
+                    .padding(.bottom, 31)
+                
+                HStack{
+                    Text("아이디")
+                        .font(.pretendard(.semibold, size: 16))
+                        .foregroundStyle(Color(hex: "7D848A"))
+                    Spacer()
+                }
+                TextField("아이디를 입력해 주세요.", text: $viewModel.username)
+                    .textInputAutocapitalization(.never)
+                    .textFieldStyle(CustomTextField(height: 55))
+                    .font(.system(size: 16))
+                    .padding(.bottom, 20)
+                
+                HStack{
+                    Text("비밀번호")
+                        .font(.pretendard(.semibold, size: 16))
+                        .foregroundStyle(Color(hex: "7D848A"))
+                    Spacer()
+                }
+                TextField("비밀번호를 입력해 주세요.", text: $viewModel.password)
+                    .textInputAutocapitalization(.never)
+                    .textFieldStyle(CustomTextField(height: 55))
+                    .font(.system(size: 16))
+                    .padding(.bottom, 20)
+                
+                HStack{
+                    Text("비밀번호 확인")
+                        .font(.pretendard(.semibold, size: 16))
+                        .foregroundStyle(Color(hex: "7D848A"))
+                    Spacer()
+                }
+                TextField("비밀번호를 한 번 더 입력해 주세요.", text: $viewModel.passwordCheck)
+                    .textInputAutocapitalization(.never)
+                    .textFieldStyle(CustomTextField(height: 55))
+                    .font(.system(size: 16))
+                    .padding(.bottom, 20)
+                
+                Spacer()
+                
+                SignUpButton(viewModel: viewModel, action: {
+                    Task {
+                        let signupResult = await viewModel.signUp()
+                        if signupResult {
+                            next = true
+                        } else {
+                            print("회원가입 실패")
+                        }
+                    }
+                }, text: "회원가입")
+                
+                
             }
-            .disabled(!isPasswordSame(password: viewModel.password, passwordCheck: passwordCheck))
+            .padding(.horizontal, 17)
+            HStack {
+                Text("아이디가 있나요?")
+                NavigationLink {
+                    SignUpView()
+                        .navigationBarBackButtonHidden()
+                } label: {
+                    Text("로그인")
+                }
+            }
+            .padding(.top,19)
+            .font(.pretendard(.regular, size: 16))
+            .foregroundColor(Color(hex: "424242"))
             
         }
-        .navigationDestination(isPresented: $showMain) {
-            MainTabView()
+        
+        .navigationDestination(isPresented: $next, destination: {
+            MainView()
+                .navigationBarBackButtonHidden()
+        })
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("로그인 실패"),dismissButton: .cancel(Text("ㅇㅋ")))
         }
-    }
-    func isPasswordSame(password: String, passwordCheck: String) -> Bool {
-        return password == passwordCheck
     }
 }
 
