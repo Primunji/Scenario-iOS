@@ -19,6 +19,11 @@ struct ContactCard: View {
             .onAppear {
                 viewModel.fetchContacts()
             }
+            .refreshable {
+                withAnimation(.easeIn(duration: 0.5)) {
+                    viewModel.fetchContacts()
+                }
+            }
             .frame(width: scale.size.width, height: 526)
             .navigationDestination(isPresented: $next) {
                 ContactMoreView()
@@ -43,7 +48,9 @@ struct ContactCard: View {
         HStack {
             Text("연락처")
                 .font(.pretendard(.semibold, size: 16))
-                .padding(20)
+                .padding(.top,20)
+                .padding(.leading,20)
+                .padding(.bottom,10)
                 .foregroundStyle(Color(hex: "2B7FFF"))
             Spacer()
         }

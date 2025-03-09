@@ -27,7 +27,6 @@ class ContactViewModel: ObservableObject {
             "Content-Type": "application/json",
             "Authorization": "Bearer \(accessToken)"
         ]
-        
         AF.request(
             "https://scenario-api.euns.dev/contacts",
             method: .get,
@@ -39,6 +38,7 @@ class ContactViewModel: ObservableObject {
             switch response.result {
             case.success(let result):
                 print("연락처가져오기성공")
+                print(self.accessToken)
                 self.contact = result.data
             case.failure(let error):
                 print(error)

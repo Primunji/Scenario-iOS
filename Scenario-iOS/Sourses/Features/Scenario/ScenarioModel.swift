@@ -8,19 +8,19 @@
 import Foundation
 
 struct ScenarioModel: Decodable, Identifiable {
-    let id: Int
-    let name: String
-    let content: String
-    let profile_url: String
-    let actor_id: String
-    let prompt: String
-    let assistant_id: String
-    let created_at: String
+    var id: Int
+    var name: String
+    var content: String
+    var profile_url: String
+    var actor_id: String
+    var prompt: String
+    var assistant_id: String
+    var created_at: String
 }
 
 struct ScenarioResponse: Decodable {
-    let status: Int
-    let state: String
-    let message: String
-    let data: [ScenarioModel]
+    var status: Int
+    var state: String
+    var message: String
+    var data: [ScenarioModel]
 }

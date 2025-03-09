@@ -9,18 +9,19 @@ import SwiftUI
 
 @main
 struct Scenario_iOSApp: App {
-    @AppStorage("accessToken")
-    private var accessToken: String?
+    
+    private var accessToken: String = "eyJhbGciOiJIUzM4NCJ9.eyJpZCI6MiwibmFtZSI6IuqwleyXsCIsInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDE1MTUxNzYsImV4cCI6MTc0MTUxODc3Nn0.xdRYwNw5RdFHTnYccctyxLyqrOytdVxmp52gJrupwjWnFh6ILRg9egd67NFaTQsi"
     @StateObject private var viewModel = SignInViewModel()
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                if accessToken == nil {
-                    MainView()
-                } else {
-                    MainTabView()
-                }
-//                MainView()
+//                MessageView()
+//                if accessToken == nil {
+//                    MainView()
+//                } else {
+//                    MainTabView()
+//                }
+                MainView()
 //                TestPilotView()
             }
         }

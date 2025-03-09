@@ -21,11 +21,11 @@ struct ContactView: View {
                     Image("Logo")
                         .resizable()
                         .frame(width: 30, height: 30)
-                        .padding(.top, 39)
+                        
                     Text("연락처")
                         .font(.pretendard(.semibold, size: 36))
                         .padding(.bottom, 10)
-                        .padding(.top, 50)
+                        .padding(.top, 11)
                     Spacer()
                 }
                 
@@ -37,7 +37,7 @@ struct ContactView: View {
                 AddButton(text: "연락처 추가") {
                     //연락처추가
                 }
-                .offset(y: 10)
+                .padding(.bottom, 17)
             }
             .padding(.horizontal, 16)
             
@@ -51,7 +51,8 @@ struct ContactView: View {
 
 
 #Preview {
-    ContactView()
+//    ContactView()
+    MainTabView()
 }
 
 

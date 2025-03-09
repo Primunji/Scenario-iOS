@@ -47,9 +47,11 @@ struct RecentCard: View {
     private func scenarioHeader() -> some View {
         
         HStack {
-            Text("최근 통화")
+            Text("내역")
                 .font(.pretendard(.semibold, size: 16))
-                .padding(20)
+                .padding(.top,20)
+                .padding(.leading,20)
+                .padding(.bottom,10)
                 .foregroundStyle(Color(hex: "2B7FFF"))
             Spacer()
             

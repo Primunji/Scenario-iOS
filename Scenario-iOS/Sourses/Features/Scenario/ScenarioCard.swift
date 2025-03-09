@@ -5,10 +5,13 @@
 //  Created by dgsw07 on 3/9/25.
 //
 import SwiftUI
+import Alamofire
 
 struct ScenarioCard: View {
     @State var next = false
     @State var alertOn = false
+    @State var alertOn2 = false
+    @State var selectedScenarioId: Int? = nil
 
     @ObservedObject var viewModel: ScenarioViewModel
     let height: CGFloat
@@ -22,15 +25,21 @@ struct ScenarioCard: View {
                             scenarioBackground(scale)
                             scenarioContent(scale)
                                 .foregroundStyle(.black)
-
                         }
                 }
                 .frame(width: scale.size.width, height: scale.size.height)
             }
             .alert(isPresented: $alertOn) {
-                Alert(title: Text("연락처에 추가하시겠습니까?"), primaryButton: .cancel(Text("아니요")), secondaryButton: .default(Text("네"), action: {
-                    
-                }))
+                Alert(
+                    title: Text("연락처에 추가하시겠습니까?"),
+                    primaryButton: .cancel(Text("아니요")),
+                    secondaryButton: .default(Text("네"), action: {
+                        if let scenarioId = selectedScenarioId {
+                            viewModel.postScenarioIdToContacts(scenarioId: scenarioId)
+                            
+                        }
+                    })
+                )
             }
             .onAppear {
                 viewModel.fetchScenario()
@@ -56,11 +65,12 @@ struct ScenarioCard: View {
     }
 
     private func scenarioHeader() -> some View {
-        
         HStack {
-            Text("시나리오")
+            Text("시나리오 목록")
                 .font(.pretendard(.semibold, size: 16))
-                .padding(20)
+                .padding(.top,20)
+                .padding(.leading,20)
+                .padding(.bottom,10)
                 .foregroundStyle(Color(hex: "2B7FFF"))
             Spacer()
             Button {
@@ -71,8 +81,10 @@ struct ScenarioCard: View {
                     .foregroundStyle(Color(hex: "51A2FF"))
                 Text("시나리오 제작")
                     .font(.pretendard(.semibold, size: 14))
-                    .padding(.trailing, 20)
             }
+            .padding(.top,20)
+            .padding(.trailing,20)
+            .padding(.bottom,10)
         }
     }
 
@@ -88,8 +100,8 @@ struct ScenarioCard: View {
 
     private func scenarioRow(_ newScenario: ScenarioModel, _ scale: GeometryProxy) -> some View {
         Button {
+            selectedScenarioId = newScenario.id
             alertOn = true
-            
         } label: {
             HStack(spacing: 10) {
                 AsyncImage(url: URL(string: newScenario.profile_url)) { image in
@@ -97,12 +109,13 @@ struct ScenarioCard: View {
                         .scaledToFit()
                         .clipShape(Circle())
                         .frame(width: 80, height: 80)
+                        .padding(.leading, -12)
                 } placeholder: {
                     Image(systemName: "person.crop.circle.fill")
                         .foregroundColor(Color(hex: "C6C9CB"))
                         .font(.system(size: 60))
                 }
-
+                
                 VStack(alignment: .leading,spacing: 0) {
                     Text(newScenario.name)
                         .font(.pretendard(.semibold, size: 18))
@@ -114,11 +127,9 @@ struct ScenarioCard: View {
             }
             .frame(width: scale.size.width, height: 80)
             .padding(.leading, 27)
-
-        }    }
+        }
+    }
 }
-
-
 
 #Preview {
     ScenarioView(viewModel: ScenarioViewModel())

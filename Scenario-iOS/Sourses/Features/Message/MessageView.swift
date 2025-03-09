@@ -21,26 +21,24 @@ struct MessageView: View {
                     Image("Logo")
                         .resizable()
                         .frame(width: 30, height: 30)
-                        .padding(.top, 39)
-                    Text("연락처")
+                        
+                    Text("메시지")
                         .font(.pretendard(.semibold, size: 36))
                         .padding(.bottom, 10)
-                        .padding(.top, 50)
+                        .padding(.top, 11)
                     Spacer()
                 }
                 
                 CustomSearchField(placeholder: "검색하기",searchText: $searchText)
                 
-                MessageCard(height: 499)
+                MessageCard(viewModel: ContactViewModel(),height: 499)
                 
-                
-                AddButton(text: "addButtonText") {
-                    print("dd")
+                AddButton(text: "연락처 추가") {
+                    //
                 }
-                .offset(y: 10)
+                .padding(.bottom, 17)
             }
             .padding(.horizontal, 16)
-            
         }
     }
 }

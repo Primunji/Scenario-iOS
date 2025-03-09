@@ -21,11 +21,10 @@ struct RecentCallView: View {
                     Image("Logo")
                         .resizable()
                         .frame(width: 30, height: 30)
-                        .padding(.top, 39)
                     Text("최근 통화")
                         .font(.pretendard(.semibold, size: 36))
                         .padding(.bottom, 10)
-                        .padding(.top, 50)
+                        .padding(.top, 11)
                     Spacer()
                 }
                 
@@ -34,13 +33,12 @@ struct RecentCallView: View {
                 RecentCard(viewModel: ScenarioViewModel(), height: 499)
                 
                 
-                AddButton(text: "addButtonText") {
+                AddButton(text: "내역 더보기") {
                     print("dd")
                 }
-                .offset(y: 10)
+                .padding(.bottom, 17)
             }
             .padding(.horizontal, 16)
-            
         }
         
     }
