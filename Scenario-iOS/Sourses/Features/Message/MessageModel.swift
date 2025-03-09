@@ -24,6 +24,6 @@ struct MessageModel: Codable {
     let profile_url: String
     let recent_message: String
     let last_message: String
-    let created_at: String
+    let created_at: Date
 }
 

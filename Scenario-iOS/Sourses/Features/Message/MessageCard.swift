@@ -10,47 +10,63 @@ import SwiftUI
 struct MessageCard : View {
     @State var next = false
     @State var alertOn = false
-
+    
     @ObservedObject var viewModel: MessageViewModel
     let height: CGFloat
-
+    
     var body: some View {
         GeometryReader { scale in
             ZStack {
                 VStack {
                     scenarioBackground(scale)
                         .overlay {
-                            scenarioBackground(scale)
-                            scenarioContent(scale)
-                                .foregroundStyle(.black)
+                            if viewModel.messages.isEmpty {
+                                Text("메시지가 없습니다")
+                                    .font(.pretendard(.semibold, size: 18))
+                            } else {
+                                scenarioBackground(scale)
+                                scenarioContent(scale)
+                            }
                         }
                 }
                 .frame(width: scale.size.width, height: scale.size.height)
             }
             .onAppear {
-                viewModel.fetchMessages()
+                viewModel.fetchMessageRooms()
+            }
+            .refreshable {
+                withAnimation(.easeIn(duration: 0.5)) {
+                    viewModel.fetchMessageRooms()
+                }
             }
             .frame(width: scale.size.width, height: 526)
-            .navigationDestination(isPresented: $next) {
-                ChatView()
-                    .navigationBarBackButtonHidden()
-            }
+
+            
+            //            .onAppear {
+            //                viewModel.fetchMessages()
+            //            }
+            //            .frame(width: scale.size.width, height: 526)
+            //            .navigationDestination(isPresented: $next) {
+            //                ChatView()
+            //                    .navigationBarBackButtonHidden()
+            //            }
         }
     }
-
+    
     private func scenarioBackground(_ scale: GeometryProxy) -> some View {
         RoundedRectangle(cornerRadius: 10)
             .frame(width: scale.size.width, height: height)
             .foregroundColor(.white)
+            
     }
-
+    
     private func scenarioContent(_ scale: GeometryProxy) -> some View {
         VStack {
             scenarioHeader()
             recentList(scale)
         }
     }
-
+    
     private func scenarioHeader() -> some View {
         
         HStack {
@@ -64,7 +80,7 @@ struct MessageCard : View {
             
         }
     }
-
+    
     private func recentList(_ scale: GeometryProxy) -> some View {
         ScrollView {
             LazyVStack {
@@ -74,7 +90,7 @@ struct MessageCard : View {
             }
         }
     }
-
+    
     private func recentRow(_ newRecent: MessageModel, _ scale: GeometryProxy) -> some View {
         Button {
             next = true

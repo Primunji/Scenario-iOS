@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessageBox: View {
-    var message = MessageModel(id: 1, thread_id: "thread_id", scenario_id: 1, userId: 1, name: "name", content: "content", profile_url: "profile_url", recent_message: "recent_message", last_message: "last_message", created_at: "21:00")
+    var message : ChatModel
     let isMySend: Bool
     var body: some View {
         HStack(spacing: 0) {
@@ -22,7 +22,7 @@ struct MessageBox: View {
                             .font(.pretendard(.semibold, size: 14))
                             .frame(maxWidth: 290, alignment: .leading)
                         HStack(alignment: .bottom,spacing: 9) {
-                            Text(message.last_message)
+                            Text(message.message)
                                 .padding(.vertical, 10)
                                 .padding(.horizontal, 15)
                                 .font(.pretendard(.semibold, size: 16))
@@ -32,7 +32,7 @@ struct MessageBox: View {
                                 }
                                 .cornerRadius(10)
                                 .fixedSize(horizontal: false, vertical: true)
-                            Text(message.created_at)
+                            Text("\(message.created_at)")
                                 .font(.pretendard(.medium, size: 14))
                                 .foregroundStyle(.black.opacity(0.4))
                         }
@@ -44,10 +44,10 @@ struct MessageBox: View {
             } else {
                 Spacer()
                 HStack(alignment: .bottom,spacing: 9) {
-                    Text(message.created_at)
+                    Text("\(message.created_at)")
                         .font(.pretendard(.medium, size: 14))
                         .foregroundStyle(.black.opacity(0.4))
-                    Text(message.last_message)
+                    Text(message.message)
                         .padding(.vertical, 10)
                         .padding(.horizontal, 15)
                         .font(.pretendard(.semibold, size: 16))
@@ -64,9 +64,3 @@ struct MessageBox: View {
         }
     }
 }
-
-#Preview {
-    MessageBox(isMySend: false)
-}
-
-

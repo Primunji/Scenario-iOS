@@ -2,16 +2,24 @@ import SwiftUI
 
 struct ContactCard: View {
     @State var next = false
+    @State var selectedUser: ContactModel?
     @ObservedObject var viewModel: ContactViewModel
+    var onSelect: (ContactModel) -> Void
     let height: CGFloat
+    
     var body: some View {
         GeometryReader { scale in
             ZStack {
                 VStack {
                     scenarioBackground(scale)
                         .overlay {
-                            scenarioBackground(scale)
-                            scenarioContent(scale)
+                            if viewModel.contact.isEmpty {
+                                Text("저장된 연락처가 없습니다")
+                                    .font(.pretendard(.semibold, size: 18))
+                            } else {
+                                scenarioBackground(scale)
+                                scenarioContent(scale)
+                            }
                         }
                 }
                 .frame(width: scale.size.width, height: scale.size.height)
@@ -26,7 +34,10 @@ struct ContactCard: View {
             }
             .frame(width: scale.size.width, height: 526)
             .navigationDestination(isPresented: $next) {
-                ContactMoreView()
+                if let user = selectedUser {
+                    ContactMoreView(user: user)
+                        .navigationBarBackButtonHidden()
+                }
             }
         }
     }
@@ -61,6 +72,11 @@ struct ContactCard: View {
             LazyVStack {
                 ForEach(viewModel.contact, id: \.id) { newContact in
                     contactRow(newContact, scale)
+                        .onTapGesture {
+                            selectedUser = newContact
+                            next = true
+                            onSelect(newContact)
+                        }
                 }
             }
         }
@@ -99,6 +115,7 @@ struct ContactCard: View {
 
 
 
-#Preview {
-    ContactCard(viewModel: ContactViewModel(), height: 499)
-}
+
+
+
+

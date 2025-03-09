@@ -8,9 +8,10 @@ import SwiftUI
 
 struct CreateView: View {
     @Environment(\.dismiss) var dismiss
-    @State private var isSuccess: Bool = false
-    @State private var scenarioText: String = ""
-    @State private var alertOn = false
+    @State var isLoading = false
+    @State var isSuccess: Bool? = nil
+    @State var scenarioText: String = ""
+    @State var alertOn = false
     @FocusState private var isTextFieldFocused: Bool
     private let placeholder: String = "부적절한 시나리오는 승인이 되지 않을수도 있습니다. 모든 시나리오는 관리자의 승인후 추가 됩니다."
     @StateObject var viewModel = ScenarioViewModel()
@@ -48,28 +49,20 @@ struct CreateView: View {
                     }
                 }
                 CreateButton(action: {
-                    viewModel.postScenario { success in
-                        isSuccess = success
-                        if success {
-                            print("시나리오 업로드 성공")
-                            alertOn = true
-                        } else {
-                            print("시나리오 업로드 실패")
-                        }
-                    }
-                })
+                              viewModel.postScenario { success in
+                                  isSuccess = success
+                                  isLoading = false 
+                                  if success {
+                                      print("시나리오 업로드 성공")
+                                      alertOn = true
+                                  } else {
+                                      print("시나리오 업로드 실패")
+                                  }
+                              }
+                          }, isLoading: $isLoading, isSuccess: $isSuccess)
+                       
                 
-                //                AnimatedButton {
-                //                    Text("시나리오 제작")
-                //                        .font(.pretendard(.semibold, size: 18))
-                //                } action: {
-                //                    do {
-                //                        try await Task.sleep(for: .seconds(2))
-                //                        return isSuccess ? .success : .failed
-                //                    } catch {
-                //                        return .failed
-                //                    }
-                //                }
+                               
                 .padding(.top, 10)
             }
             .padding(.horizontal, 17)

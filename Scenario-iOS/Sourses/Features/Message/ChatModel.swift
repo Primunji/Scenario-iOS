@@ -14,7 +14,7 @@ struct ChatResponse: Decodable {
     let data: [ChatModel]
 }
 
-struct ChatModel: Codable {
+struct ChatModel: Codable, Identifiable, Hashable {
     let id: String
     let thread_id: String
     let name: String
@@ -23,4 +23,5 @@ struct ChatModel: Codable {
     let is_bot: Bool
     let created_at: Date
 }
+
 

@@ -22,12 +22,24 @@ struct ScenarioCard: View {
                 VStack {
                     scenarioBackground(scale)
                         .overlay {
-                            scenarioBackground(scale)
-                            scenarioContent(scale)
-                                .foregroundStyle(.black)
+                            if viewModel.scenario.isEmpty {
+                                Text("제작된 시나리오가 없습니다")
+                                    .font(.pretendard(.semibold, size: 18))
+                            } else {
+                                scenarioBackground(scale)
+                                scenarioContent(scale)
+                            }
                         }
                 }
                 .frame(width: scale.size.width, height: scale.size.height)
+            }
+            .onAppear {
+                viewModel.fetchScenario()
+            }
+            .refreshable {
+                withAnimation(.easeIn(duration: 0.5)) {
+                    viewModel.fetchScenario()
+                }
             }
             .alert(isPresented: $alertOn) {
                 Alert(
@@ -47,6 +59,7 @@ struct ScenarioCard: View {
             .frame(width: scale.size.width, height: 526)
             .navigationDestination(isPresented: $next) {
                 CreateView()
+                    .navigationBarBackButtonHidden()
             }
         }
     }
@@ -122,7 +135,7 @@ struct ScenarioCard: View {
                     Text(newScenario.content)
                         .lineLimit(1)
                         .font(.pretendard(.medium, size: 16))
-                }
+                }.foregroundStyle(.black)
                 Spacer()
             }
             .frame(width: scale.size.width, height: 80)

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MessageHeader: View {
     @Environment(\.dismiss) var dismiss
+    var user: ContactModel
     var body: some View {
         GeometryReader { scale in
             VStack {
@@ -22,10 +23,10 @@ struct MessageHeader: View {
                             .foregroundStyle(.black)
                     }
                     VStack(alignment: .leading) {
-                        Text("김강연")
+                        Text(user.name)
                             .font(.pretendard(.semibold, size: 18))
                             .padding(.bottom,2)
-                        Text("당신의 가족이 납치 되었습니다.")
+                        Text(user.content)
                             .font(.pretendard(.medium, size: 16))
                     }
                     Spacer()
@@ -37,8 +38,4 @@ struct MessageHeader: View {
         .frame(height: 135)
         .background(Color.white)
     }
-}
-
-#Preview {
-    MessageHeader()
 }

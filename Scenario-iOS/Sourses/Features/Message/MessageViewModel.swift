@@ -13,8 +13,8 @@ class MessageViewModel: ObservableObject {
     private var accessToken: String {
         return UserDefaults.standard.string(forKey: "accessToken") ?? ""
     }
-
-    func fetchMessages() {
+    
+    func fetchMessageRooms() {
         let url = "https://scenario-api.euns.dev/room"
         let header: HTTPHeaders = [
             "Content-Type": "application/json",
@@ -27,40 +27,22 @@ class MessageViewModel: ObservableObject {
             encoding: JSONEncoding.default,
             headers: header
         )
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: MessageResponse.self) { response in
-                switch response.result {
-                case .success(let messageResponse):
-                    print("응답 상태: \(messageResponse.status)")
-                    print("메시지 내용: \(messageResponse.message)")
-
-                    self.messages = messageResponse.data
-                case .failure(let error):
-                    print("데이터 요청 실패: \(error.localizedDescription)")
-                    
-                }
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: MessageResponse.self) { response in
+            switch response.result {
+            case .success(let messageResponse):
+                print("메시지성공")
+                print("응답 상태: \(messageResponse.status)")
+                print("메시지 내용: \(messageResponse.message)")
+                print("\(messageResponse.data)")
+                
+                self.messages = messageResponse.data
+            case .failure(let error):
+                print("데이터 요청 실패: \(error.localizedDescription)")
+                
             }
+        }
     }
-
-    // 메시지를 서버로 전송하는 함수
-//    func sendMessage(_ message: String) {
-//        let url = "https://scenario-api.euns.dev/room"  // 메시지를 전송할 URL
-//        let parameters: [String: Any] = [
-//            "content": message
-//        ]
-//
-//        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-//            .validate()
-//            .responseDecodable(of: MessageResponse.self) { response in
-//                switch response.result {
-//                case .success(let messageResponse):
-//                    print("메시지 전송 성공: \(messageResponse.status)")
-//                    self.fetchMessages()  // 메시지를 전송한 후 메시지 목록을 갱신
-//                case .failure(let error):
-//                    print("메시지 전송 실패: \(error)")
-//                }
-//            }
-//    }
 }
 
 

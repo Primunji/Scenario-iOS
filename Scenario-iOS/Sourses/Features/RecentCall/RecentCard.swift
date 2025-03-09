@@ -4,8 +4,8 @@ import SwiftUI
 struct RecentCard: View {
     @State var next = false
     @State var alertOn = false
-
-    @ObservedObject var viewModel: ScenarioViewModel
+    @State var selectedUser: ContactModel?
+    @ObservedObject var viewModel: RecentViewModel
     let height: CGFloat
 
     var body: some View {
@@ -14,19 +14,30 @@ struct RecentCard: View {
                 VStack {
                     scenarioBackground(scale)
                         .overlay {
-                            scenarioBackground(scale)
-                            scenarioContent(scale)
-                                .foregroundStyle(.black)
+                            if viewModel.recent.isEmpty {
+                                Text("최근 기록이 없습니다")
+                                    .font(.pretendard(.semibold, size: 18))
+                            } else {
+                                scenarioBackground(scale)
+                                scenarioContent(scale)
+                            }
                         }
                 }
                 .frame(width: scale.size.width, height: scale.size.height)
             }
             .onAppear {
-                viewModel.fetchScenario()
+                viewModel.fetchRecents()
+            }
+            .refreshable {
+                withAnimation(.easeIn(duration: 0.5)) {
+                    viewModel.fetchRecents()
+                }
             }
             .frame(width: scale.size.width, height: 526)
             .navigationDestination(isPresented: $next) {
-                ContactMoreView()
+                if let user = selectedUser {
+                    ContactMoreView(user: user)
+                }
             }
         }
     }
@@ -61,14 +72,14 @@ struct RecentCard: View {
     private func recentList(_ scale: GeometryProxy) -> some View {
         ScrollView {
             LazyVStack {
-                ForEach(viewModel.scenario, id: \.id) { newRecent in
+                ForEach(viewModel.recent, id: \.id) { newRecent in
                     recentRow(newRecent, scale)
                 }
             }
         }
     }
 
-    private func recentRow(_ newRecent: ScenarioModel, _ scale: GeometryProxy) -> some View {
+    private func recentRow(_ newRecent: RecentModel, _ scale: GeometryProxy) -> some View {
         Button {
             next = true
             
@@ -104,7 +115,7 @@ struct RecentCard: View {
 
 
 #Preview {
-    RecentCard(viewModel: ScenarioViewModel(), height: 499)
+    RecentCard(viewModel: RecentViewModel(), height: 499)
 }
 
 

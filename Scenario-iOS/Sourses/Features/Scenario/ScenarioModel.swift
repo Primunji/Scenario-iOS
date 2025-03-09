@@ -24,3 +24,4 @@ struct ScenarioResponse: Decodable {
     var message: String
     var data: [ScenarioModel]
 }
+

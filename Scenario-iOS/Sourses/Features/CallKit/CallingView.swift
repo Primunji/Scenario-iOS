@@ -11,7 +11,7 @@ struct CallingView: View {
     @State var thread_id = "thread_2TVeyaA8WAiawiMOt0Z0oBft";
     @StateObject private var speechRecognizer = SpeechRecognizer()
     @Binding var stopCalling : Bool
-    
+    var user: ContactModel
     var body: some View {
         ZStack {
             LinearGradient(colors: [Color(hex: "0066FF"), Color(hex: "80A9EB")], startPoint: .top, endPoint: .bottom)
@@ -23,7 +23,7 @@ struct CallingView: View {
                     .font(.system(size: 130))
                     .foregroundStyle(.white)
                 
-                Text("이기찬")
+                Text(user.name)
                     .font(.pretendard(.semibold, size: 36))
                     .foregroundStyle(.white)
                 Spacer().frame(height: 400)

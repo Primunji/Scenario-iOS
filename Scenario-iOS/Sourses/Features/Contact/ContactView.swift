@@ -11,6 +11,7 @@ struct ContactView: View {
     @State var next = false
     @State var searchText = ""
     @State var seeMore = false
+    @State private var selectedUser: ContactModel?
     
     var body: some View {
         ZStack {
@@ -29,13 +30,13 @@ struct ContactView: View {
                     Spacer()
                 }
                 
-                CustomSearchField(placeholder: "검색하기",searchText: $searchText)
+                CustomSearchField(placeholder: "검색하기", searchText: $searchText)
                 
-                ContactCard(viewModel: ContactViewModel(),height: 499)
-                
+                ContactCard(viewModel: ContactViewModel(), onSelect: { _ in }, height: 499)
+
                 
                 AddButton(text: "연락처 추가") {
-                    //연락처추가
+                    // 연락처 추가 로직
                 }
                 .padding(.bottom, 17)
             }
@@ -43,11 +44,14 @@ struct ContactView: View {
             
         }
         .navigationDestination(isPresented: $next) {
-            ContactMoreView()
-                .navigationBarBackButtonHidden()
+            if let user = selectedUser {
+                ContactMoreView(user: user)
+                    .navigationBarBackButtonHidden()
+            }
         }
     }
 }
+
 
 
 #Preview {
