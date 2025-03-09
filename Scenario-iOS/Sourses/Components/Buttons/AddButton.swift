@@ -13,14 +13,19 @@ struct AddButton: View {
     
     var body: some View {
         Button(action: action) {
-            HStack {
-                Image(systemName: "plus")
-                    .font(.pretendard(.regular, size: 16))
-                Text(text)
-                    .font(.pretendard(.semibold, size: 14))
-            }
-            .foregroundColor(Color(hex: "#1068ED"))
-            .padding(10)
+            RoundedRectangle(cornerRadius: 5)
+                .frame(width: 135,height: 39)
+                .foregroundColor(Color(hex:"#F2F6FF"))
+                .overlay {
+                    HStack {
+                        Image(systemName: "plus")
+                            .font(.pretendard(.regular, size: 16))
+                        Text(text)
+                            .font(.pretendard(.semibold, size: 14))
+                    }
+                    .foregroundColor(Color(hex: "#1068ED"))
+                    .padding(10)
+                }
         }
     }
 }

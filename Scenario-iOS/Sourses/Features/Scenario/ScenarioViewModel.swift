@@ -86,28 +86,31 @@ class ScenarioViewModel: ObservableObject {
         let url = serverUrl.getUrl(for: "/scenario/upload-profile")
         
         let header: HTTPHeaders = [
-            "Authorization": "Bearer \(accessToken)"
+            "Authorization": "Bearer \(accessToken)",
+            "Content-Type":"multipart/form-data"
         ]
         
         AF.upload(multipartFormData: { formData in
             if let imageData = image.jpegData(compressionQuality: 0.8) {
                 formData.append(imageData, withName: "image", fileName: "file.jpg", mimeType: "image/jpeg")
             }
-        }, to: url, headers: header)
+        }, to: url, method: .post, headers: header)
         .validate(statusCode: 200..<300)
         .responseDecodable(of: UploadResponse.self) { response in
             switch response.result {
             case .success(let uploadResponse):
-                print("이미지 업로드 성공: \(uploadResponse.imageUrl)")
+                print("이미지 업로드 성공: \(uploadResponse.message)")
                 DispatchQueue.main.async {
-                    self.imageUrl = uploadResponse.imageUrl
+                    self.imageUrl = uploadResponse.message
                 }
                 completion(true)
             case .failure(let error):
+                print("이미지 업로드 실패: \(error.localizedDescription)")
+                print("응답 상태 코드: \(response.response?.statusCode ?? 0)")
+                print("응답 데이터: \(String(data: response.data ?? Data(), encoding: .utf8) ?? "없음")")
                 DispatchQueue.main.async {
                     self.errorMessage = "이미지 업로드 실패: \(error.localizedDescription)"
                 }
-                print("이미지 업로드 실패: \(error.localizedDescription)")
                 completion(false)
             }
         }
@@ -160,7 +163,7 @@ class ScenarioViewModel: ObservableObject {
             "imageUrl": imageUrl ?? ""
         ]
         
-        AF.request("https://scenario-api.euns.dev/scenario", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header)
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header)
             .validate(statusCode: 200..<300)
             .response { response in
                 switch response.result {
@@ -187,7 +190,9 @@ class ScenarioViewModel: ObservableObject {
 }
 
 struct UploadResponse: Decodable {
-    var imageUrl: String
+    var status: Int
+    var state: String
+    var message: String
 }
 
 struct IdResponse: Decodable {

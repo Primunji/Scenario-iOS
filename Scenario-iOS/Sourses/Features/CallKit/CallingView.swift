@@ -40,8 +40,9 @@ struct CallingView: View {
                     
                     
                     DisconnectButton {
-                        speechRecognizer.isListening = true
+                        speechRecognizer.isListening = false
                         speechRecognizer.disconnectWebSocket()
+                        speechRecognizer.stopListening()
                         withAnimation(.easeInOut(duration: 0.3)) {
                             stopCalling = false
                         }
@@ -61,6 +62,7 @@ struct CallingView: View {
             }
         }
         .onDisappear {
+            speechRecognizer.stopListening()
             speechRecognizer.disconnectWebSocket()
         }
         .onAppear {
