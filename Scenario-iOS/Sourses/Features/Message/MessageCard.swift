@@ -40,18 +40,13 @@ struct MessageCard : View {
                 }
             }
             .frame(width: scale.size.width, height: 526)
-
+        }.navigationDestination(isPresented: $next) {
+            ChatView(user: user)
+                .navigationBarBackButtonHidden()
             
-            //            .onAppear {
-            //                viewModel.fetchMessages()
-            //            }
-            //            .frame(width: scale.size.width, height: 526)
-            //            .navigationDestination(isPresented: $next) {
-            //                ChatView()
-            //                    .navigationBarBackButtonHidden()
-            //            }
         }
     }
+
     
     private func scenarioBackground(_ scale: GeometryProxy) -> some View {
         RoundedRectangle(cornerRadius: 10)
@@ -111,9 +106,11 @@ struct MessageCard : View {
                 VStack(alignment: .leading) {
                     Text(newRecent.name)
                         .font(.pretendard(.semibold, size: 18))
+                        .foregroundColor(.black)
                     Text(newRecent.recent_message)
                         .lineLimit(1)
                         .font(.pretendard(.medium, size: 16))
+                        .foregroundColor(.black)
                 }
                 Spacer()
             }

@@ -99,9 +99,11 @@ struct RecentCard: View {
                 VStack(alignment: .leading) {
                     Text(newRecent.name)
                         .font(.pretendard(.semibold, size: 18))
+                        .foregroundColor(.black)
                     Text(newRecent.content)
                         .lineLimit(1)
                         .font(.pretendard(.medium, size: 16))
+                        .foregroundColor(.black)
                 }
                 Spacer()
             }
