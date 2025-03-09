@@ -11,7 +11,7 @@ struct MessageCard : View {
     @State var next = false
     @State var alertOn = false
 
-    @ObservedObject var viewModel: ContactViewModel
+    @ObservedObject var viewModel: MessageViewModel
     let height: CGFloat
 
     var body: some View {
@@ -28,7 +28,7 @@ struct MessageCard : View {
                 .frame(width: scale.size.width, height: scale.size.height)
             }
             .onAppear {
-                viewModel.fetchContacts()
+                viewModel.fetchMessages()
             }
             .frame(width: scale.size.width, height: 526)
             .navigationDestination(isPresented: $next) {
@@ -68,14 +68,14 @@ struct MessageCard : View {
     private func recentList(_ scale: GeometryProxy) -> some View {
         ScrollView {
             LazyVStack {
-                ForEach(viewModel.contact, id: \.id) { newRecent in
+                ForEach(viewModel.messages, id: \.id) { newRecent in
                     recentRow(newRecent, scale)
                 }
             }
         }
     }
 
-    private func recentRow(_ newRecent: ContactModel, _ scale: GeometryProxy) -> some View {
+    private func recentRow(_ newRecent: MessageModel, _ scale: GeometryProxy) -> some View {
         Button {
             next = true
             
@@ -95,7 +95,7 @@ struct MessageCard : View {
                 VStack(alignment: .leading) {
                     Text(newRecent.name)
                         .font(.pretendard(.semibold, size: 18))
-                    Text(newRecent.content)
+                    Text(newRecent.recent_message)
                         .lineLimit(1)
                         .font(.pretendard(.medium, size: 16))
                 }

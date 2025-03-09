@@ -8,17 +8,14 @@
 import Foundation
 import Alamofire
 
-class MessageViewModel: ObservableObject {
-    @Published var messages: [MessageModel] = []
-    private var accessToken: String {
-        return UserDefaults.standard.string(forKey: "accessToken") ?? ""
-    }
+class ChatViewModel: ObservableObject {
+    let thread_id: String = ""
+    @Published var chats: [ChatModel] = []
 
     func fetchMessages() {
-        let url = "https://scenario-api.euns.dev/room"
+        let url = "https://scenario-ai.euns.dev/chat?thread_id=\(thread_id)"
         let header: HTTPHeaders = [
             "Content-Type": "application/json",
-            "Authorization": "Bearer \(accessToken)"
         ]
         
         AF.request(
@@ -28,13 +25,15 @@ class MessageViewModel: ObservableObject {
             headers: header
         )
             .validate(statusCode: 200..<300)
-            .responseDecodable(of: MessageResponse.self) { response in
+            .responseDecodable(of: ChatResponse.self) { response in
                 switch response.result {
-                case .success(let messageResponse):
-                    print("응답 상태: \(messageResponse.status)")
-                    print("메시지 내용: \(messageResponse.message)")
-
-                    self.messages = messageResponse.data
+                case .success(let chatResponse):
+                    print("응답 상태: \(chatResponse.status)")
+                    print("메시지 내용: \(chatResponse.message)")
+                    for data in chatResponse.data {
+                        print("메시지 ID: \(data.id), 내용: \(data.message)")
+                    }
+                    self.chats = chatResponse.data
                 case .failure(let error):
                     print("데이터 요청 실패: \(error.localizedDescription)")
                     

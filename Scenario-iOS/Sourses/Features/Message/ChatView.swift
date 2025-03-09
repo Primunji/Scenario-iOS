@@ -3,7 +3,7 @@
 import SwiftUI
 
 struct ChatView: View {
-    //    @StateObject var viewModel = MessageViewModel()
+        @StateObject var viewModel = MessageViewModel()
     @State var message = ""
     var body: some View {
         VStack(spacing:0) {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		19622CAA2D7C11F700ECB5D7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 19622CA92D7C11F700ECB5D7 /* Alamofire */; };
 		19622E082D7CB48D00ECB5D7 /* SwiftAudioEx in Frameworks */ = {isa = PBXBuildFile; productRef = 19622E072D7CB48D00ECB5D7 /* SwiftAudioEx */; };
+		9CDE7BCC2D7DBAF5008FA26A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9CDE7BCB2D7DBAED008FA26A /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		19622B2F2D7B6D0100ECB5D7 /* Scenario-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Scenario-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		19622B392D7B6D0100ECB5D7 /* Scenario-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Scenario-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		19622BBD2D7B70E700ECB5D7 /* Scenario-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Scenario-iOS-Info.plist"; sourceTree = "<group>"; };
+		9CDE7BCB2D7DBAED008FA26A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -73,6 +75,7 @@
 		19622B162D7B6D0000ECB5D7 = {
 			isa = PBXGroup;
 			children = (
+				9CDE7BCB2D7DBAED008FA26A /* .gitignore */,
 				19622BC22D7B717200ECB5D7 /* Scenario-iOS */,
 				19622BBD2D7B70E700ECB5D7 /* Scenario-iOS-Info.plist */,
 				19622B202D7B6D0000ECB5D7 /* Products */,
@@ -209,6 +212,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CDE7BCC2D7DBAF5008FA26A /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,7 +396,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"/Users/dgsw07/Desktop/AIExpo/Scenario-iOS\"";
+				DEVELOPMENT_ASSET_PATHS = "\"/Users/leesangeun/Desktop/Sescenario/Scenario-iOS\"";
 				DEVELOPMENT_TEAM = 29R2Q8L23R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -426,7 +430,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"/Users/dgsw07/Desktop/AIExpo/Scenario-iOS\"";
+				DEVELOPMENT_ASSET_PATHS = "\"/Users/leesangeun/Desktop/Sescenario/Scenario-iOS\"";
 				DEVELOPMENT_TEAM = 29R2Q8L23R;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
