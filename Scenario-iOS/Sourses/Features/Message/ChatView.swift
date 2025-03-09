@@ -36,7 +36,13 @@ struct ChatView: View {
                     }
                 }
             }
-            MessageField(message: $message, thread_id: $thread_id)
+            MessageField(message: $message, thread_id: $thread_id, action: {
+                DispatchQueue.global(qos: .background).async {
+                    DispatchQueue.main.async {
+                        chatGateway.sendToServer(text: message, thread_id: thread_id)
+                    }
+                }
+            })
         }
         .ignoresSafeArea()
         .onAppear {
@@ -69,3 +75,4 @@ struct ChatView: View {
     }
     
 }
+
