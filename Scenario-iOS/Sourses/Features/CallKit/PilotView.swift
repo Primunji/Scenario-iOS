@@ -106,7 +106,13 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
             case .success(let message):
                 switch message {
                 case .string(let text):
-                    self.handleReceivedMessage(text)
+                    if (text == "end") {
+                        self.disconnectWebSocket()
+                        print("통화종료")
+                    }else{
+                        self.handleReceivedMessage(text)
+                    }
+                
                     print("서버 메시지 수신: \(text)")
                 case .data(let data):
                     print("서버 데이터 수신: \(data)")

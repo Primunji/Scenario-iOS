@@ -21,7 +21,7 @@ struct ChatModel: Codable, Identifiable, Hashable {
     let content: String
     let message: String
     let is_bot: Bool
-    let created_at: Date
+    let created_at: String
 }
 
 

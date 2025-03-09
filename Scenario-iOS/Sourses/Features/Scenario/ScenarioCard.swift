@@ -23,8 +23,12 @@ struct ScenarioCard: View {
                     scenarioBackground(scale)
                         .overlay {
                             if viewModel.scenario.isEmpty {
-                                Text("제작된 시나리오가 없습니다")
-                                    .font(.pretendard(.semibold, size: 18))
+                                VStack{
+                                    scenarioHeader()
+                                    Spacer()
+                                    Text("제작된 시나리오가 없습니다")
+                                        .font(.pretendard(.semibold, size: 18))
+                                }
                             } else {
                                 scenarioBackground(scale)
                                 scenarioContent(scale)

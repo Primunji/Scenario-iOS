@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct CallingView: View {
-    @State var thread_id = "thread_2TVeyaA8WAiawiMOt0Z0oBft";
+
     @StateObject private var speechRecognizer = SpeechRecognizer()
     @Binding var stopCalling : Bool
     var user: ContactModel
+    var thread_id: String = "thread_2TVeyaA8WAiawiMOt0Z0oBft";
     var body: some View {
         ZStack {
             LinearGradient(colors: [Color(hex: "0066FF"), Color(hex: "80A9EB")], startPoint: .top, endPoint: .bottom)
@@ -66,6 +67,7 @@ struct CallingView: View {
             speechRecognizer.disconnectWebSocket()
         }
         .onAppear {
+            print(thread_id)
             if (speechRecognizer.isListening) {
                 speechRecognizer.stopListening()
             }else{

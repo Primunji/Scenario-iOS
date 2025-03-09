@@ -61,6 +61,8 @@ struct MessageBox: View {
                 .frame(maxWidth: 290, alignment: .trailing)
 
             }
+        }.onAppear{
+            print(message)
         }
     }
 }

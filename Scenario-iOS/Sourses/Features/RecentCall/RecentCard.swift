@@ -36,7 +36,7 @@ struct RecentCard: View {
             .frame(width: scale.size.width, height: 526)
             .navigationDestination(isPresented: $next) {
                 if let user = selectedUser {
-                    ContactMoreView(user: user)
+                    ContactMoreView(user: user, callViewModel: CallViewModel())
                 }
             }
         }

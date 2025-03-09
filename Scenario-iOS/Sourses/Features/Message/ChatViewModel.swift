@@ -9,10 +9,10 @@ import Foundation
 import Alamofire
 
 class ChatViewModel: ObservableObject {
-    let thread_id: String = ""
+
     @Published var chats: [ChatModel] = []
 
-    func fetchMessages() {
+    func fetchMessages(thread_id:String) {
         let url = "https://scenario-ai.euns.dev/chat?thread_id=\(thread_id)"
         let header: HTTPHeaders = [
             "Content-Type": "application/json",
@@ -33,7 +33,9 @@ class ChatViewModel: ObservableObject {
                     for data in chatResponse.data {
                         print("메시지 ID: \(data.id), 내용: \(data.message)")
                     }
-                    self.chats = chatResponse.data
+                    DispatchQueue.main.async {
+                       self.chats = chatResponse.data
+                    }
                 case .failure(let error):
                     print("데이터 요청 실패: \(error.localizedDescription)")
                     

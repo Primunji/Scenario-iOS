@@ -45,7 +45,7 @@ struct ContactView: View {
         }
         .navigationDestination(isPresented: $next) {
             if let user = selectedUser {
-                ContactMoreView(user: user)
+                ContactMoreView(user: user, callViewModel: CallViewModel())
                     .navigationBarBackButtonHidden()
             }
         }

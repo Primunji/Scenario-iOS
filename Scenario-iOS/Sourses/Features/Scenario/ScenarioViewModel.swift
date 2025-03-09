@@ -208,6 +208,7 @@ class ScenarioViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var imageUrl: String = ""
     
+    var s3ImageUrl: String = "";
     let serverUrl = ServerUrl.shared
     
     private var accessToken: String {
@@ -297,6 +298,7 @@ class ScenarioViewModel: ObservableObject {
             switch response.result {
             case .success(let uploadResponse):
                 print("이미지 업로드 성공: \(uploadResponse.message)")
+                self.s3ImageUrl = uploadResponse.message
                 DispatchQueue.main.async {
                     if self.scenario.count > 0 {
                         self.scenario[0].profile_url = uploadResponse.message
@@ -383,7 +385,7 @@ class ScenarioViewModel: ObservableObject {
             "name": name,
             "content": content,
             "prompt": prompt,
-            "imageUrl": imageUrl ?? ""
+            "imageUrl": self.s3ImageUrl ?? ""
         ]
         
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header)

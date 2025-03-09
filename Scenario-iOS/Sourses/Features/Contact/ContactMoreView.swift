@@ -11,13 +11,15 @@ struct ContactMoreView: View {
     var user: ContactModel
     @StateObject var viewModel = ChatViewModel()
     @StateObject private var speechRecognizer = SpeechRecognizer()
+    @ObservedObject var callViewModel: CallViewModel;
     @State var callingViewOn = false
     @State var next = false
+    @State var thread_id = ""
     @Environment(\.dismiss) var dismiss
     var body: some View {
         ZStack {
             if callingViewOn {
-                CallingView(stopCalling: $callingViewOn, user: user)
+                CallingView(stopCalling: $callingViewOn, user: user, thread_id: thread_id)
             } else {
                 ZStack {
                     Color.black.opacity(0.05)
@@ -45,9 +47,19 @@ struct ContactMoreView: View {
                         
                         HStack {
                             ContactButton(action: {
-                                withAnimation(.easeInOut(duration: 0.3)) {
-                                    callingViewOn = true
+                                callViewModel.postCall(scenario_id: user.scenario_id) { success, threadId in
+                                    if success {
+                                        withAnimation(.easeInOut(duration: 0.3)) {
+                                            thread_id = threadId
+                                            callingViewOn = true
+                                            print("\(thread_id) 스레드 갖고왓어요")
+                                        }
+                                    
+                                    } else {
+                                        print("미션 실패 흐에에에")
+                                    }
                                 }
+                           
                             }, text: "전화하기") //MARK: 버튼으로 만들어서 콜킷기능 넣으면됨
                             // Text(speechRecognizer.isListening ? "통화 종료" : "통화 시작")
                             ContactButton(action: {
