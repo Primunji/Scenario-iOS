@@ -12,12 +12,17 @@ class ChatViewModel: ObservableObject {
 
     @Published var chats: [ChatModel] = []
 
-    func fetchMessages(thread_id:String) {
+    func addMessage(data:ChatModel) {
+        chats.append(data)
+    }
+    
+    func fetchMessages(thread_id:String ) {
         let url = "https://scenario-ai.euns.dev/chat?thread_id=\(thread_id)"
         let header: HTTPHeaders = [
             "Content-Type": "application/json",
         ]
         
+
         AF.request(
             url,
             method: .get,
@@ -32,10 +37,9 @@ class ChatViewModel: ObservableObject {
                     print("메시지 내용: \(chatResponse.message)")
                     for data in chatResponse.data {
                         print("메시지 ID: \(data.id), 내용: \(data.message)")
+                 
                     }
-                    DispatchQueue.main.async {
-                       self.chats = chatResponse.data
-                    }
+                    self.chats = chatResponse.data
                 case .failure(let error):
                     print("데이터 요청 실패: \(error.localizedDescription)")
                     

@@ -6,24 +6,24 @@
 //
 
 import SwiftUI
-import Speech
-import AVFoundation
-import AVKit
-import SwiftAudioEx
 
 class ChatGateway: NSObject, ObservableObject {
     @Published var thread_id = ""
     
-    var viewModel:ChatViewModel
+    var viewModel: ChatViewModel?
+    
+    override init() {
+        super.init()
+    }
+    
+    func setViewModel(_ viewModel: ChatViewModel) {
+        self.viewModel = viewModel
+    }
     
     private var webSocketTask: URLSessionWebSocketTask?
     private let serverURL = URL(string: "wss://scenario-ai.euns.dev/chat/ws")
 
-    
-    override init() {
-        self.viewModel = ChatViewModel()
-        super.init()
-    }
+
   
     func connectWebSocket() {
         guard let url = serverURL else { return }
@@ -68,7 +68,8 @@ class ChatGateway: NSObject, ObservableObject {
     }
 
     private func handleReceivedMessage(_ text: String) {
-        viewModel.fetchMessages(thread_id: thread_id)
+     
+        viewModel?.fetchMessages(thread_id: thread_id)
     }
 
     private func reconnectWebSocket() {

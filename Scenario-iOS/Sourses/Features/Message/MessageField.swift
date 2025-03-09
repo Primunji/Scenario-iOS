@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MessageField: View {
     @Binding var message: String
+    @Binding var thread_id: String
     var body: some View {
         GeometryReader { scale in
             Rectangle()
@@ -22,7 +23,7 @@ struct MessageField: View {
                         .overlay {
                             TextField("대화 내용을 입력해주세요.", text: $message)
                                 .padding(.leading,15)
-                                .textFieldStyle(MessageTextFieldStyle())
+                                .textFieldStyle(MessageTextFieldStyle(text:$message, threadId: $thread_id))
                             
                         }
                 }
@@ -35,13 +36,13 @@ struct MessageField: View {
     }
 }
 
-#Preview {
-    @State var text = ""
-    MessageField(message: $text)
-}
 
 
 struct MessageTextFieldStyle: TextFieldStyle {
+    @Binding var text: String
+    @Binding var threadId: String
+    
+
     func _body(configuration: TextField<Self._Label>) -> some View {
         GeometryReader { scale in
             VStack {
@@ -49,10 +50,16 @@ struct MessageTextFieldStyle: TextFieldStyle {
                     configuration
                         .font(.pretendard(.medium, size: 14))
                         .foregroundStyle(Color(hex:"#7D848A"))
-                    Image(systemName: "paperplane.circle.fill")
-                        .font(.system(size: 35))
-                        .padding(.trailing,5)
-                        .foregroundStyle(Color(hex: "2B7FFF"))
+                    Button {
+                        DispatchQueue.main.async {
+                        }
+                    } label: {
+                        Image(systemName: "paperplane.circle.fill")
+                            .font(.system(size: 35))
+                            .padding(.trailing,5)
+                            .foregroundStyle(Color(hex: "2B7FFF"))
+                    }
+
                 }
             }
             .frame(width: scale.size.width,height: scale.size.height)

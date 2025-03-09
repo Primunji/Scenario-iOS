@@ -49,17 +49,17 @@ struct CreateView: View {
                     }
                 }
                 CreateButton(action: {
-                              viewModel.postScenario { success in
-                                  isSuccess = success
-                                  isLoading = false 
-                                  if success {
-                                      print("시나리오 업로드 성공")
-                                      alertOn = true
-                                  } else {
-                                      print("시나리오 업로드 실패")
-                                  }
-                              }
-                          }, isLoading: $isLoading, isSuccess: $isSuccess)
+                  viewModel.postScenario { success in
+                      isSuccess = success
+                      isLoading = false 
+                      if success {
+                          print("시나리오 업로드 성공")
+                          alertOn = true
+                      } else {
+                          print("시나리오 업로드 실패")
+                      }
+                  }
+              }, isLoading: $isLoading, isSuccess: $isSuccess)
                        
                 
                                
