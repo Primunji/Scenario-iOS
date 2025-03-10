@@ -10,8 +10,9 @@ import SwiftUI
 struct MessageCard : View {
     @State var next = false
     @State var alertOn = false
-    
     @ObservedObject var viewModel: MessageViewModel
+    @State var selectedUser: ContactModel?
+//    var onSelect: (MessageModel) -> Void
     let height: CGFloat
     
     var body: some View {
@@ -21,8 +22,12 @@ struct MessageCard : View {
                     scenarioBackground(scale)
                         .overlay {
                             if viewModel.messages.isEmpty {
-                                Text("메시지가 없습니다")
-                                    .font(.pretendard(.semibold, size: 18))
+                                ScrollView {
+                                    VStack {
+                                        Text("메시지 없습니다")
+                                            .font(.pretendard(.semibold, size: 18))
+                                    }
+                                }
                             } else {
                                 scenarioBackground(scale)
                                 scenarioContent(scale)
@@ -41,9 +46,10 @@ struct MessageCard : View {
             }
             .frame(width: scale.size.width, height: 526)
         }.navigationDestination(isPresented: $next) {
-            ChatView(user: user)
-                .navigationBarBackButtonHidden()
-            
+            if let user = selectedUser {
+                ChatView(user: user)
+                    .navigationBarBackButtonHidden()
+            }
         }
     }
 

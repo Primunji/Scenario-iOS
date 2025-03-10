@@ -143,13 +143,14 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
         print("오디오 파일 URL: \(audioURL)")
 
         audioPlayer = AVPlayer(url: audioURL)
-        
-
+        audioPlayer?.play()
+        self.stopListening()
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: audioPlayer?.currentItem, queue: .main) { _ in
+            self.startListening()
             print("오디오 재생 완료, 마이크 다시 시작")
         }
         
-        audioPlayer?.play()
+        
     }
 
     private func reconnectWebSocket() {
@@ -237,7 +238,6 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
         if let jsonData = try? JSONSerialization.data(withJSONObject: json, options: []) {
             if let jsonString = String(data: jsonData, encoding: .utf8) {
                 let message = URLSessionWebSocketTask.Message.string(jsonString)
-                
                 webSocketTask?.send(message) { error in
                     if let error = error {
                         print("WebSocket 메시지 전송 오류: \(error.localizedDescription)")

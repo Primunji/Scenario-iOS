@@ -15,8 +15,12 @@ struct RecentCard: View {
                     scenarioBackground(scale)
                         .overlay {
                             if viewModel.recent.isEmpty {
-                                Text("최근 기록이 없습니다")
-                                    .font(.pretendard(.semibold, size: 18))
+                                ScrollView {
+                                    VStack {
+                                        Text("최근기록이 없습니다")
+                                            .font(.pretendard(.semibold, size: 18))
+                                    }
+                                }
                             } else {
                                 scenarioBackground(scale)
                                 scenarioContent(scale)
@@ -116,9 +120,6 @@ struct RecentCard: View {
 
 
 
-#Preview {
-    RecentCard(viewModel: RecentViewModel(), height: 499)
-}
 
 
 //

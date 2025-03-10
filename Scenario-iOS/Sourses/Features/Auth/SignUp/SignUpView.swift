@@ -39,7 +39,8 @@ struct SignUpView: View {
                     .textFieldStyle(CustomTextField(height: 55))
                     .font(.system(size: 16))
                     .padding(.bottom, 20)
-                
+                    .autocapitalization(.none)
+
                 HStack{
                     Text("비밀번호")
                         .font(.pretendard(.semibold, size: 16))
@@ -51,7 +52,8 @@ struct SignUpView: View {
                     .textFieldStyle(CustomTextField(height: 55))
                     .font(.system(size: 16))
                     .padding(.bottom, 20)
-                
+                    .autocapitalization(.none)
+
                 HStack{
                     Text("비밀번호 확인")
                         .font(.pretendard(.semibold, size: 16))
@@ -63,7 +65,8 @@ struct SignUpView: View {
                     .textFieldStyle(CustomTextField(height: 55))
                     .font(.system(size: 16))
                     .padding(.bottom, 20)
-                
+                    .autocapitalization(.none)
+
                 Spacer()
                 
                 SignUpButton(viewModel: viewModel, action: {
@@ -72,7 +75,7 @@ struct SignUpView: View {
                         if signupResult {
                             next = true
                         } else {
-                            print("회원가입 실패")
+                            showAlert = true
                         }
                     }
                 }, text: "회원가입")
@@ -100,7 +103,7 @@ struct SignUpView: View {
                 .navigationBarBackButtonHidden()
         })
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("로그인 실패"),dismissButton: .cancel(Text("ㅇㅋ")))
+            Alert(title: Text(!next ? "회원가입 성공" : "회원가입 실패"),dismissButton: .default(Text("확인")))
         }
     }
 }

@@ -6,7 +6,6 @@ struct ContactCard: View {
     @ObservedObject var viewModel: ContactViewModel
     var onSelect: (ContactModel) -> Void
     let height: CGFloat
-    
     var body: some View {
         GeometryReader { scale in
             ZStack {
@@ -14,8 +13,12 @@ struct ContactCard: View {
                     scenarioBackground(scale)
                         .overlay {
                             if viewModel.contact.isEmpty {
-                                Text("저장된 연락처가 없습니다")
-                                    .font(.pretendard(.semibold, size: 18))
+                                ScrollView {
+                                    VStack {
+                                        Text("저장된 연락처가 없습니다")
+                                            .font(.pretendard(.semibold, size: 18))
+                                    }
+                                }
                             } else {
                                 scenarioBackground(scale)
                                 scenarioContent(scale)

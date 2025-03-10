@@ -30,12 +30,13 @@ struct SignInView: View {
                 TextField("아이디를 입력하세요", text: $viewModel.username)
                     .padding(.top, 25)
                     .textFieldStyle(CustomTextField(height: 65))
-                
+                    .autocapitalization(.none)
                 
                 TextField("비밀번호를 입력하세요", text: $viewModel.password)
                     .padding(.top, 25)
                     .textFieldStyle(CustomTextField(height: 65))
-                
+                    .autocapitalization(.none)
+
                 Spacer()
                 
                 LoginButton(viewModel: viewModel,action: {
@@ -45,7 +46,6 @@ struct SignInView: View {
                             next = true
 
                         } else {
-                            print(viewModel.loginerrorMessage ?? "로그인 실패")
                             showAlert = true
                         }
                     }
@@ -74,7 +74,7 @@ struct SignInView: View {
                 .navigationBarBackButtonHidden()
         })
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("로그인 실패"),dismissButton: .cancel(Text("ㅇㅋ")))
+            Alert(title: Text("로그인 실패"),dismissButton: .cancel(Text("확인")))
         }
     }
 }

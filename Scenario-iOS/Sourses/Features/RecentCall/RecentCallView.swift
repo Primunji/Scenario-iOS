@@ -11,7 +11,6 @@ struct RecentCallView: View {
     @State var next = false
     @State var searchText = ""
     @State private var seeMore = false
-    
     var body: some View {
         ZStack {
             Color.black.opacity(0.05)
@@ -44,8 +43,3 @@ struct RecentCallView: View {
     }
 }
     
-
-#Preview {
-    RecentCallView()
-}
-
