@@ -16,6 +16,9 @@ class CallViewModel: ObservableObject {
         return UserDefaults.standard.string(forKey: "accessToken") ?? ""
     }
     
+    
+    
+    
     func postCall(scenario_id:Int, completion: @escaping (Bool,String) -> Void) {
         let url = serverUrl.getUrl(for: "/call")
         let header: HTTPHeaders = [

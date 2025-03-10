@@ -9,21 +9,8 @@ import SwiftUI
 import Foundation
 
 
-func convertISO8601StringToDate(_ dateString: String) -> String? {
-    let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds] // 소수점 이하 초 단위 지원
-    if let date = formatter.date(from: dateString) {
-        let displayFormatter = DateFormatter()
-        displayFormatter.dateFormat = "HH:mm"
-        return displayFormatter.string(from: date)
-    } else {
-        return nil
-    }
-}
-
 struct MessageBox: View {
     var message : ChatModel
-    @State var time = convertISO8601StringToDate("2025-03-09T21:19:32.107000")
     var body: some View {
         HStack(spacing: 0) {
             if message.is_bot {
@@ -46,7 +33,7 @@ struct MessageBox: View {
                                 }
                                 .cornerRadius(10)
                                 .fixedSize(horizontal: false, vertical: true)
-                            Text("\(time)")
+                            Text("\(message.created_at)")
                                 .font(.pretendard(.medium, size: 14))
                                 .foregroundStyle(.black.opacity(0.4))
                         }
@@ -58,7 +45,7 @@ struct MessageBox: View {
             } else {
                 Spacer()
                 HStack(alignment: .bottom,spacing: 9) {
-                    Text("\(time)")
+                    Text("\(message.created_at)")
                         .font(.pretendard(.medium, size: 14))
                         .foregroundStyle(.black.opacity(0.4))
                     Text(message.message)

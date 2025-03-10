@@ -12,6 +12,7 @@ struct MessageCard : View {
     @State var alertOn = false
     @ObservedObject var viewModel: MessageViewModel
     @State var selectedUser: ContactModel?
+    @State var selectedThread: String
 //    var onSelect: (MessageModel) -> Void
     let height: CGFloat
     
@@ -47,7 +48,7 @@ struct MessageCard : View {
             .frame(width: scale.size.width, height: 526)
         }.navigationDestination(isPresented: $next) {
             if let user = selectedUser {
-                ChatView(user: user)
+                ChatView(user: user, is_first: false, thread_id: selectedThread)
                     .navigationBarBackButtonHidden()
             }
         }
@@ -94,8 +95,10 @@ struct MessageCard : View {
     
     private func recentRow(_ newRecent: MessageModel, _ scale: GeometryProxy) -> some View {
         Button {
+            selectedUser = ContactModel(id: Int(newRecent.id), scenario_id: Int(newRecent.scenario_id), userId: Int(newRecent.userId), name: newRecent.name, content: newRecent.content, profile_url: newRecent.profile_url, created_at: newRecent.created_at)
+            print(newRecent.thread_id)
+            selectedThread = newRecent.thread_id
             next = true
-            
         } label: {
             HStack(spacing: 10) {
                 AsyncImage(url: URL(string: newRecent.profile_url)) { image in
