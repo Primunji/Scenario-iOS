@@ -4,25 +4,28 @@
 //
 //  Created by dgsw07 on 3/10/25.
 //
-
-import SwiftUI
 import Combine
+import UIKit
 
 class KeyboardResponder: ObservableObject {
-    @Published var currentHeight: CGFloat = 0
+    @Published var keyboardHeight: CGFloat = 0
     
-    private var cancellable: AnyCancellable?
+    private var cancellables: Set<AnyCancellable> = []
     
     init() {
-        cancellable = Publishers.Merge(
-            NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
-                .map { notification -> CGFloat in
-                    let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-                    return keyboardFrame?.height ?? 0
-                },
-            NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
-                .map { _ in CGFloat(0) }
-        )
-        .assign(to: \.currentHeight, on: self)
+        NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+            .merge(with: NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification))
+            .sink { notification in
+                if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                    self.keyboardHeight = keyboardFrame.height
+                }
+            }
+            .store(in: &cancellables)
+
+        NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+            .sink { _ in
+                self.keyboardHeight = 0
+            }
+            .store(in: &cancellables)
     }
 }

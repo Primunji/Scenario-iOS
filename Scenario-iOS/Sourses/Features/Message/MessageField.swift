@@ -10,28 +10,29 @@ import SwiftUI
 struct MessageField: View {
     @Binding var message: String
     @Binding var thread_id: String
-    var action: () -> Void  // Remove @Binding here
+    var action: () -> Void
     var body: some View {
         GeometryReader { scale in
-            Rectangle()
-                .stroke(lineWidth: 1)
-                .foregroundStyle(.black.opacity(0.1))
-                .overlay {
-                VStack {
-                    Capsule()
-                        .frame(width: scale.size.width * 0.95,height: 50)
-                        .foregroundStyle(Color(hex: "#F3F4F5"))
-                        .overlay {
-                            TextField("대화 내용을 입력해주세요.", text: $message)
-                                .padding(.leading,15)
-                                .textFieldStyle(MessageTextFieldStyle(text:$message, threadId: $thread_id, action:action))
-                            
+            ZStack {
+                Rectangle()
+                    .stroke(lineWidth: 1)
+                    .foregroundStyle(.black.opacity(0.1))
+                    .overlay {
+                        VStack {
+                            Capsule()
+                                .frame(width: scale.size.width * 0.91,height: 50)
+                                .foregroundStyle(Color(hex: "#F3F4F5"))
+                                .overlay {
+                                    TextField("대화 내용을 입력해주세요.", text: $message)
+                                        .padding(.leading,15)
+                                        .textFieldStyle(MessageTextFieldStyle(text:$message, threadId: $thread_id, action:action))
+                                    
+                                }
                         }
-                }
+                    }
+                    .frame(width: scale.size.width, height: scale.size.height)
             }
-            .frame(width: scale.size.width, height: scale.size.height)
         }
-        
         .frame(height: 98)
         .background(Color.white)
     }
@@ -42,7 +43,7 @@ struct MessageField: View {
 struct MessageTextFieldStyle: TextFieldStyle {
     @Binding var text: String
     @Binding var threadId: String
-    var action: () -> Void  // Remove @Binding here
+    var action: () -> Void 
 
 
     func _body(configuration: TextField<Self._Label>) -> some View {

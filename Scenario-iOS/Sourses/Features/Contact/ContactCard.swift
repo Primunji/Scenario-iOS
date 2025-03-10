@@ -15,9 +15,13 @@ struct ContactCard: View {
                             if viewModel.contact.isEmpty {
                                 ScrollView {
                                     VStack {
+                                        Spacer()
                                         Text("저장된 연락처가 없습니다")
                                             .font(.pretendard(.semibold, size: 18))
+                                        Spacer()
+
                                     }
+                                    
                                 }
                             } else {
                                 scenarioBackground(scale)

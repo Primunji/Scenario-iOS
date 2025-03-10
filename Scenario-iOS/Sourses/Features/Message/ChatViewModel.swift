@@ -11,6 +11,7 @@ import Alamofire
 class ChatViewModel: ObservableObject {
 
     @Published var chats: [ChatModel] = []
+    @Published var isLoading = false
 
     func addMessage(data:ChatModel) {
         chats.append(data)
@@ -31,14 +32,17 @@ class ChatViewModel: ObservableObject {
         )
             .validate(statusCode: 200..<300)
             .responseDecodable(of: ChatResponse.self) { response in
+                self.isLoading = true
                 switch response.result {
                 case .success(let chatResponse):
+                    self.isLoading = false
                     print("응답 상태: \(chatResponse.status)")
                     print("메시지 내용: \(chatResponse.message)")
                     for data in chatResponse.data {
                         print("메시지 ID: \(data.id), 내용: \(data.message)")
                  
                     }
+                    
                     self.chats = chatResponse.data
                 case .failure(let error):
                     print("데이터 요청 실패: \(error.localizedDescription)")

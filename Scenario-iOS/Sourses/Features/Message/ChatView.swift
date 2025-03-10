@@ -1,44 +1,54 @@
-
-
 import SwiftUI
-import Foundation
+
 
 struct ChatView: View {
     @StateObject private var viewModel = ChatViewModel()
     private var timer: Timer?
-
     @StateObject var chatGateway = ChatGateway()
     @StateObject var callViewModel = CallViewModel()
     @State var select_thread_id = ""
     @State var message = ""
     var user: ContactModel
     var is_first = false
-    
-    // Make sure there's a public initializer that accepts the user parameter
+    @StateObject private var keyboardResponder = KeyboardResponder() 
+
     public init(user: ContactModel, is_first: Bool, thread_id: String) {
         self.user = user
         self.is_first = is_first
         self._select_thread_id = State(initialValue: thread_id)
     }
-    
+
     var body: some View {
         VStack(spacing:0) {
             MessageHeader(user: user)
                 .padding(.horizontal,17)
             ZStack {
                 Color.black.opacity(0.1)
-                ScrollView {
-                    LazyVStack(spacing: 33) {
-                        ForEach(viewModel.chats, id: \.id) { newChat in
-                            if newChat.message != "새대화" {
-                                MessageBox(message: newChat)
+                ScrollViewReader { scrollViewProxy in
+                    ScrollView {
+                        LazyVStack(spacing: 4) {
+                            ForEach(viewModel.chats, id: \.id) { newChat in
+                                if newChat.message != "새대화" {
+                                    MessageBox(message: newChat)
+                                        .id(newChat.id)
+                                        .transition(.opacity.combined(with: .move(edge: .bottom)))
+                                }
                             }
+                            .padding(.horizontal, 17)
+                            .padding(.vertical, 10)
+                            .padding(.top, 10)
                         }
-                        .padding(.horizontal, 17)
-                        .padding(.vertical, 35)
                     }
+                    .onChange(of: viewModel.chats.count) { _ in
+                           if let lastMessage = viewModel.chats.last {
+                               withAnimation {
+                                   scrollViewProxy.scrollTo(lastMessage.id, anchor: .bottom)
+                               }
+                           }
+                       }
                 }
             }
+            
             MessageField(message: $message, thread_id: $select_thread_id, action: {
                 DispatchQueue.global(qos: .background).async {
                     DispatchQueue.main.async {
@@ -51,6 +61,9 @@ struct ChatView: View {
                     }
                 }
             })
+            .padding(.bottom, keyboardResponder.keyboardHeight)
+            .animation(.easeOut(duration: 0.3), value: keyboardResponder.keyboardHeight)
+            .edgesIgnoringSafeArea(.bottom)
         }
         .ignoresSafeArea()
         .onAppear {
@@ -61,27 +74,24 @@ struct ChatView: View {
                         if success {
                             select_thread_id = threadId
                             viewModel.fetchMessages(thread_id: select_thread_id)
-                            print("✅ 메시지 로드 완료: \(viewModel.chats)")
+                            print("메시지 로드 완료: \(viewModel.chats)")
                             chatGateway.connectWebSocket()
                             DispatchQueue.main.async {
-                                
                                 if viewModel.chats.isEmpty {
                                     chatGateway.sendToServer(text: "새대화", thread_id: select_thread_id)
-                                    print("🚀 초기 메시지 요청 전송")
+                                    print("초기 메시지 요청 전송")
                                 }
                             }
-                            
                         } else {
-                            print("❌ 미션 실패 흐에에에")
+                            print("미션 실패 흐에에에")
                         }
                     }
                 }
             }else{
                 chatGateway.setViewModel(viewModel)
                    DispatchQueue.global(qos: .background).async {
-                       // select_thread_id를 재할당하지 않음 (이미 초기화 함수에서 설정됨)
                        viewModel.fetchMessages(thread_id: select_thread_id)
-                       print("✅ 메시지 로드 완료: \(viewModel.chats)")
+                       print("메시지 로드 완료: \(viewModel.chats)")
                        print("사용 중인 thread_id: \(select_thread_id)")
                        chatGateway.connectWebSocket()
                    }
@@ -91,6 +101,4 @@ struct ChatView: View {
             chatGateway.disconnectWebSocket()
         }
     }
-    
 }
-

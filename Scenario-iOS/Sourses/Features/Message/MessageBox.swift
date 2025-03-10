@@ -10,11 +10,12 @@ import Foundation
 
 
 struct MessageBox: View {
+    @StateObject var viewModel = ChatViewModel()
     var message : ChatModel
     var body: some View {
         HStack(spacing: 0) {
             if message.is_bot {
-                HStack {
+                HStack(alignment: .top) {
                     Image(systemName: "person.crop.circle.fill")
                         .font(.system(size: 56))
                         .foregroundStyle(Color(hex:"#C6C9CB"))
@@ -23,7 +24,7 @@ struct MessageBox: View {
                             .font(.pretendard(.semibold, size: 14))
                             .frame(maxWidth: 290, alignment: .leading)
                         HStack(alignment: .bottom,spacing: 9) {
-                            Text(message.message)
+                            Text(viewModel.isLoading ? "생성중.." : message.message)
                                 .padding(.vertical, 10)
                                 .padding(.horizontal, 15)
                                 .font(.pretendard(.semibold, size: 16))
