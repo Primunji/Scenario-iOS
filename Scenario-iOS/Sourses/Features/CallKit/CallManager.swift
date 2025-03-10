@@ -11,7 +11,7 @@ class CallManager: NSObject, CXProviderDelegate, ObservableObject {
     
     override init() {
         super.init()
-        let providerConfig = CXProviderConfiguration(localizedName: "MyApp")
+        let providerConfig = CXProviderConfiguration(localizedName: "시나리오")
         providerConfig.supportsVideo = false
         providerConfig.maximumCallsPerCallGroup = 1
         providerConfig.supportedHandleTypes = [.generic]

@@ -71,7 +71,7 @@ struct CallingView: View {
             if (speechRecognizer.isListening) {
                 speechRecognizer.stopListening()
             }else{
-                CallManager().startCall(handle: "테스트")
+                CallManager().startCall(handle: user.name)
                 speechRecognizer.requestPermissions()
                 speechRecognizer.connectWebSocket()
                 speechRecognizer.sendToServer(text: "새대화", thread_id: thread_id)
