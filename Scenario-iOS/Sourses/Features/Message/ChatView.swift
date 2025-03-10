@@ -1,7 +1,7 @@
 
 
 import SwiftUI
-
+import Foundation
 
 struct ChatView: View {
     @StateObject private var viewModel = ChatViewModel()
@@ -9,13 +9,16 @@ struct ChatView: View {
 
     @StateObject var chatGateway = ChatGateway()
     @StateObject var callViewModel = CallViewModel()
-    @State var thread_id = ""
+    @State var select_thread_id = ""
     @State var message = ""
     var user: ContactModel
+    var is_first = false
     
     // Make sure there's a public initializer that accepts the user parameter
-    public init(user: ContactModel) {
+    public init(user: ContactModel, is_first: Bool, thread_id: String) {
         self.user = user
+        self.is_first = is_first
+        self._select_thread_id = State(initialValue: thread_id)
     }
     
     var body: some View {
@@ -36,37 +39,52 @@ struct ChatView: View {
                     }
                 }
             }
-            MessageField(message: $message, thread_id: $thread_id, action: {
+            MessageField(message: $message, thread_id: $select_thread_id, action: {
                 DispatchQueue.global(qos: .background).async {
                     DispatchQueue.main.async {
-                        chatGateway.sendToServer(text: message, thread_id: thread_id)
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "HH:mm"
+                        let currentTime = dateFormatter.string(from: Date())
+                        viewModel.chats.append(ChatModel(id: "1", thread_id: "", name: "유저", content: "", message: message, is_bot: false, created_at: currentTime))
+                        chatGateway.sendToServer(text: message, thread_id: select_thread_id)
+                        message = ""
                     }
                 }
             })
         }
         .ignoresSafeArea()
         .onAppear {
-            chatGateway.setViewModel(viewModel)
-
-            DispatchQueue.global(qos: .background).async {
-                callViewModel.postCall(scenario_id: user.scenario_id) { success, threadId in
-                    if success {
-                        thread_id = threadId
-                        viewModel.fetchMessages(thread_id: thread_id)
-                        print("✅ 메시지 로드 완료: \(viewModel.chats)")
-                        chatGateway.connectWebSocket()
-                        DispatchQueue.main.async {
-                            
-                            if viewModel.chats.isEmpty {
-                                chatGateway.sendToServer(text: "새대화", thread_id: thread_id)
-                                print("🚀 초기 메시지 요청 전송")
+            if is_first{
+                chatGateway.setViewModel(viewModel)
+                DispatchQueue.global(qos: .background).async {
+                    callViewModel.postCall(scenario_id: user.scenario_id) { success, threadId in
+                        if success {
+                            select_thread_id = threadId
+                            viewModel.fetchMessages(thread_id: select_thread_id)
+                            print("✅ 메시지 로드 완료: \(viewModel.chats)")
+                            chatGateway.connectWebSocket()
+                            DispatchQueue.main.async {
+                                
+                                if viewModel.chats.isEmpty {
+                                    chatGateway.sendToServer(text: "새대화", thread_id: select_thread_id)
+                                    print("🚀 초기 메시지 요청 전송")
+                                }
                             }
+                            
+                        } else {
+                            print("❌ 미션 실패 흐에에에")
                         }
-
-                    } else {
-                        print("❌ 미션 실패 흐에에에")
                     }
                 }
+            }else{
+                chatGateway.setViewModel(viewModel)
+                   DispatchQueue.global(qos: .background).async {
+                       // select_thread_id를 재할당하지 않음 (이미 초기화 함수에서 설정됨)
+                       viewModel.fetchMessages(thread_id: select_thread_id)
+                       print("✅ 메시지 로드 완료: \(viewModel.chats)")
+                       print("사용 중인 thread_id: \(select_thread_id)")
+                       chatGateway.connectWebSocket()
+                   }
             }
         }
         .onDisappear{

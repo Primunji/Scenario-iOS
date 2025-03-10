@@ -31,7 +31,7 @@ struct MessageView: View {
                 
                 CustomSearchField(placeholder: "검색하기",searchText: $searchText)
                 
-                MessageCard(viewModel: MessageViewModel(),height: 499)
+                MessageCard(viewModel: MessageViewModel(),selectedThread: "",height: 499)
                 
                 AddButton(text: "연락처 추가") {
                     //

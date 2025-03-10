@@ -76,6 +76,10 @@ struct ContactMoreView: View {
                     
                 }
             }
+        }.navigationDestination(isPresented: $next) {
+            ChatView(user: user, is_first: true, thread_id: "")
+                .navigationBarBackButtonHidden()
+    
         }
     }
 }
